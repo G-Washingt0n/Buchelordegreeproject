@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Workout Partner</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_trainings">Trainings</string>
+    <string name="title_results">Results</string>
+    <string name="title_profile">Profile</string>
+    <string name="signIn">Sign In</string>
+    <string name="signUp">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="AccQuestion">Already have an account?</string>
+    <string name="noAccQuestion">Don\'t have an account?</string>
+    <string name="or"> - OR - </string>
+
+</resources>

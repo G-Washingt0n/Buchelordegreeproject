@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android.support.design="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.pgmail.martsulg.buchelordegreeproject.viewModels.LogInViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:orientation="vertical"
+        android:textSize="20sp">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_signInEditLogin"
+            style="@style/textInputStyle"
+            android.support.design:layout_constraintBottom_toTopOf="@+id/layout_signInEditPassword"
+            android.support.design:layout_constraintEnd_toEndOf="parent"
+            android.support.design:layout_constraintStart_toStartOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/signInEditLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Email"
+                android:text="@={viewModel.email2send}" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!--<EditText-->
+        <!--android:id="@+id/signInEditLogin"-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:hint="Email"-->
+        <!--android:text="@={viewModel.email2send}"-->
+        <!--tools:layout_editor_absoluteX="55dp"-->
+        <!--tools:layout_editor_absoluteY="84dp" />-->
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_signInEditPassword"
+            style="@style/textInputStyle"
+            android.support.design:layout_constraintBottom_toTopOf="@+id/SignInButton"
+            android.support.design:layout_constraintEnd_toEndOf="parent"
+            android.support.design:layout_constraintStart_toStartOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/signInEditPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Password"
+                android:text="@={viewModel.password2send}" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!--<EditText-->
+
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:hint="Password"-->
+        <!--android:text="@={viewModel.password2send}"-->
+        <!--tools:layout_editor_absoluteX="55dp"-->
+        <!--tools:layout_editor_absoluteY="206dp" />-->
+
+
+        <Button
+            android:id="@+id/SignInButton"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            android:background="@color/calmBlue"
+            android:onClick="@{() -> viewModel.onSignInClick()}"
+            android:text="Log in"
+            android:textAllCaps="false"
+            android:textColor="@color/headerText"
+            android:textSize="24sp"
+            android.support.design:layout_constraintBottom_toTopOf="@+id/signUpQuestion"
+            android.support.design:layout_constraintEnd_toEndOf="parent"
+            android.support.design:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/goToSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> viewModel.onSignUpClick()}"
+            android:text="@string/signUp"
+            android:textColor="@color/brightBlue"
+            android:textSize="24sp"
+            android.support.design:layout_constraintBottom_toBottomOf="parent"
+            android.support.design:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/signUpQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/noAccQuestion"
+            android:textColor="@color/calmBlue"
+            android:textSize="24sp"
+            android.support.design:layout_constraintBottom_toBottomOf="parent"
+            android.support.design:layout_constraintEnd_toStartOf="@+id/goToSignUp" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
