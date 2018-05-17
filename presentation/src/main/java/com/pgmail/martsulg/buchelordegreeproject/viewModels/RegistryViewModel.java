@@ -32,6 +32,7 @@ public class RegistryViewModel {
 
 
     public void onSignUpClick() {
+        EntryActivity.showProgress(activity.getSupportFragmentManager());
 
         RegisterUser profile = new RegisterUser();
         profile.setName(name2reg.get());
@@ -49,17 +50,20 @@ public class RegistryViewModel {
 //            Log.e("File error", e.toString());
 //        }
 
-
         regProfileUseCase.execute(profile, new DisposableObserver<UserInfo>() {
+
             @Override
             public void onNext(@NonNull UserInfo response) {
                 Toast.makeText(context, "Registered successfully! ",
                         Toast.LENGTH_SHORT).show();
+                toSigningIn();
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
+//TODO remove with error fields in TextInputFields
                 Log.e("Registry Error", e.toString());
+                EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
 
             @Override
@@ -69,16 +73,13 @@ public class RegistryViewModel {
                 email2reg.set(null);
                 password2reg.set(null);
                 regProfileUseCase.dispose();
+                EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
         });
 
     }
 
     public void onSignInClick() {
-        toSigningIn();
-    }
-
-    public void onBackBtnClick() {
         toSigningIn();
     }
 

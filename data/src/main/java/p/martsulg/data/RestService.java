@@ -3,6 +3,7 @@ package p.martsulg.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -10,6 +11,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
+import p.martsulg.data.models.RequestParams;
+import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -55,15 +58,15 @@ public class RestService {
     }
 
     /*
-    public Observable<ListComments> getComments(CommentParams params) {
+    public Observable<ListComments> getComments(RequestParams params) {
         return restApi.getComments(params.getToken());
     }
 
-    public Observable<Object> addComment(CommentParams params) {
+    public Observable<Object> addComment(RequestParams params) {
         return restApi.addComment(params.getTitle(), params.getMessage(), params.getToken());
     }
 
-    public Observable<Object> delComment(CommentParams params) {
+    public Observable<Object> delComment(RequestParams params) {
         return restApi.delComment(params.getCommentId(), params.getToken());
     }*/
 
@@ -83,6 +86,29 @@ public class RestService {
 //                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getAvatar());
 
         return restApi.regUser(profile);
+    }
+
+    public Observable<Boolean> checkToken(String param) {
+        return restApi.checkToken(param);
+    }
+
+    public Observable<List<TrainingsFeed>> getTrainings(RequestParams request) {
+        StringBuilder url = new StringBuilder("data/Timetable?where=ownerId%20%3D%20'");
+        url.append(request.getOwnerId());
+        url.append("'&sortBy=weekday%20asc");
+        return restApi.getTrainings(url.toString());
+//        return restApi.getTrainings("=ownerId%20%3D%20'"+ request.getOwnerId() + "'");
+    }
+
+    public Observable<UserInfo> getUserInfo(String string) {
+//        StringBuilder url = new StringBuilder("data/Users?where=email%20%3D%20'");
+//        url.append(string).append("'");
+//        return restApi.getUserInfo(url.toString());
+        return restApi.getUserInfo(string);
+    }
+
+    public Observable<Void> newTraining(TrainingsFeed feed) {
+        return restApi.newTraining(feed);
     }
 
     /*public Observable<ListAnswers> getAnswers(AnswersParams params) {

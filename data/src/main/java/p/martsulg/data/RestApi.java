@@ -1,12 +1,18 @@
 package p.martsulg.data;
 
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
+import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 
 public interface RestApi {
@@ -26,4 +32,19 @@ public interface RestApi {
 
     @POST("users/register")
     Observable<UserInfo> regUser(@Body RegisterUser profile);
+
+    @GET("users/isvalidusertoken/{token}")
+    Observable<Boolean> checkToken(@Path("token") String param);
+
+    @GET
+//("data/Timetable?{where}&sortBy=weekday%20asc")
+    Observable<List<TrainingsFeed>> getTrainings(@Url String url); //@Query("where") String ownerId);
+
+    //    @GET
+//    Observable<UserInfo> getUserInfo(@Url String url);
+    @GET("users/{userId}?props")
+    Observable<UserInfo> getUserInfo(@Path("userId") String id);
+
+    @POST("data/timetable")
+    Observable<Void> newTraining(@Body TrainingsFeed feed);
 }

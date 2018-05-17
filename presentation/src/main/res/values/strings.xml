@@ -2,7 +2,7 @@
     <string name="app_name">Workout Partner</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_trainings">Trainings</string>
-    <string name="title_results">Results</string>
+    <string name="title_progress">Progress</string>
     <string name="title_profile">Profile</string>
     <string name="signIn">Sign In</string>
     <string name="signUp">Sign Up</string>
@@ -13,5 +13,18 @@
     <string name="AccQuestion">Already have an account?</string>
     <string name="noAccQuestion">Don\'t have an account?</string>
     <string name="or"> - OR - </string>
+    <string name="setTrainingTime"> Your training begins at: </string>
+    <string name="setTime"> Ready </string>
+
+
+    <string-array name="weekdays">
+        <item name="monday">Monday</item>
+        <item name="tuesday">Tuesday</item>
+        <item name="wednesday">Wednesday</item>
+        <item name="thursday">Thursday</item>
+        <item name="friday">Friday</item>
+        <item name="saturday">Saturday</item>
+        <item name="sunday">Sunday</item>
+    </string-array>
 
 </resources>

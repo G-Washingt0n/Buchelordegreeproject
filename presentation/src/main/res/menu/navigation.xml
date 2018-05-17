@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_trainings"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/weightlifting_500px"
         android:title="@string/title_trainings" />
 
     <item
-        android:id="@+id/navigation_results"
-        android:icon="@drawable/ic_comment_black_24dp"
-        android:title="@string/title_results" />
+        android:id="@+id/navigation_progress"
+        android:icon="@drawable/total_progress500px"
+        android:title="@string/title_progress" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/person_filled_500px"
         android:title="@string/title_profile" />
 
 </menu>

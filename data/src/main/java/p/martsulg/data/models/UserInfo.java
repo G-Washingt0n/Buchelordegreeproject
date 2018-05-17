@@ -1,13 +1,27 @@
 package p.martsulg.data.models;
 
-public class UserInfo {
+import com.google.gson.annotations.SerializedName;
 
+public class UserInfo {
+    private static UserInfo instance = new UserInfo();
+
+    public UserInfo getInstance() {
+        if (instance == null) {
+            instance = new UserInfo();
+        }
+        return instance;
+    }
+
+    public void renewUserInfo(UserInfo info) {
+        instance = info;
+    }
     private String name;
     private String surname;
     private int age;
     private String email;
     private String ownerId;
     private String objectId;
+    @SerializedName("user-token")
     private String token;
 //    @SerializedName("avatar")
 //    private String avatarUrl;

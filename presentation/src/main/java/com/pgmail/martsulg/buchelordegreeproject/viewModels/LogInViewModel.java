@@ -15,6 +15,9 @@ import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.UserInfo;
 import p.martsulg.domain.entry.LogProfileUseCase;
+import p.martsulg.domain.entry.ValidTokenUseCase;
+
+import static com.pgmail.martsulg.buchelordegreeproject.activities.EntryActivity.TOKEN_NAME;
 
 public class LogInViewModel {
 
@@ -27,13 +30,15 @@ public class LogInViewModel {
     public LogInViewModel(FragmentActivity activity) {
         this.activity = activity;
         intent = new Intent(activity, NavigationActivity.class);
+        isUserSignedIn();
     }
 
-    public LogProfileUseCase logProfileUseCase = new LogProfileUseCase();
+    private ValidTokenUseCase tokenUseCase = new ValidTokenUseCase();
+    private LogProfileUseCase logProfileUseCase = new LogProfileUseCase();
 
 
     public void onSignInClick() {
-//        try {
+        EntryActivity.showProgress(activity.getSupportFragmentManager());
 
         LogInUser user = new LogInUser();
         user.setEmail(email2send.get());
@@ -41,33 +46,62 @@ public class LogInViewModel {
 
         logProfileUseCase.execute(user, new DisposableObserver<UserInfo>() {
 
-
             @Override
             public void onNext(@NonNull UserInfo response) {
-//                    if(response.getToken()!=null)
-//                        EntryActivity.setPreferences("Token", response.getToken());
-//                    intent.putExtra("Token",EntryActivity.preferences.getString("Token", null));
-//                    activity.startActivity(intent);
+                if (response != null) {
+                    EntryActivity.setPreferences(TOKEN_NAME, response.getToken());
+                    EntryActivity.setPreferences(EntryActivity.USER_ID, response.getObjectId());
+                    //intent.putExtra("Token",EntryActivity.preferences.getString("Token", null));
+//                    UserInfo user = new UserInfo().getInstance();
+//                    user.setAge(response.getAge());
+//                    user.setOwnerId(response.getOwnerId());
+
+                    activity.startActivity(intent);
+                    activity.finish();
+                }
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
+//TODO remove with error fields in TextInputFields
                 Log.e("Signing in Error", e.toString());
+                EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
 
             @Override
             public void onComplete() {
                 logProfileUseCase.dispose();
+                EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
         });
-//        } catch (Exception e) {
-//            Log.e("Error", e.toString());
-//
-//        }
     }
 
     public void onSignUpClick() {
         EntryActivity.showFragment(activity.getSupportFragmentManager(), new RegistryFragment().getInstance());
     }
 
+    private void isUserSignedIn() {
+        EntryActivity.showProgress(activity.getSupportFragmentManager());
+        tokenUseCase.execute(EntryActivity.preferences.getString(TOKEN_NAME, null), new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean response) {
+                if (response) {
+                    activity.startActivity(intent);
+                    activity.finish();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
+                tokenUseCase.dispose();
+//                EntryActivity.removeProgress(activity.getSupportFragmentManager());
+            }
+        });
+        EntryActivity.removeProgress(activity.getSupportFragmentManager());
+
+    }
 }

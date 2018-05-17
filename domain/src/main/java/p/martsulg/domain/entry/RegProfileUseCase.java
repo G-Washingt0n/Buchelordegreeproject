@@ -12,14 +12,7 @@ public class RegProfileUseCase extends UseCase<RegisterUser, UserInfo> {
 
     @Override
     protected Observable<UserInfo> buildUseCase(RegisterUser param) {
-
-        RegisterUser profile = new RegisterUser();
-
-        profile.setEmail(param.getEmail());
-        profile.setPassword(param.getPassword());
-        profile.setName(param.getName());
-        // profile.setAvatar(param.getAvatar());
-        return RestService.getInstance().regUser(profile);
+        return RestService.getInstance().regUser(param);
 
     }
 }

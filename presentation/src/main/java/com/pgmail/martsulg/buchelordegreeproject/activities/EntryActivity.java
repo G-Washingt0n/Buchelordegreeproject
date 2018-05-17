@@ -11,12 +11,16 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.LogInFragment;
+import com.pgmail.martsulg.buchelordegreeproject.fragments.ProgressBarFragment;
 
 public class EntryActivity extends FragmentActivity {
     public static SharedPreferences preferences;
 
-    public static final String SHARED_PREF_NAME = "sharedname";
+    private final String SHARED_PREF_NAME = "sharedEntry";
     public static final String TOKEN_NAME = "Token";
+    public static final String USER_ID = "ID";
+
+//    ValidTokenUseCase tokenUseCase = new ValidTokenUseCase();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,36 +28,30 @@ public class EntryActivity extends FragmentActivity {
         setContentView(R.layout.activity_entry);
 
         preferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-
-
-        if (savedInstanceState == null) {
-//TODO - add in release
-//            try { //автологин
-//                if (!preferences.getString(TOKEN_NAME, null).isEmpty()) {
+//        showProgress(getSupportFragmentManager());
+//        tokenUseCase.execute(preferences.getString(TOKEN_NAME, null), new DisposableObserver<Boolean>() {
+//            @Override
+//            public void onNext(Boolean response) {
+//                if (response) {
 //                    Intent intent = new Intent(EntryActivity.this, NavigationActivity.class);
 //                    startActivity(intent);
+//                    finish();
 //                }
-//            } catch (Exception e) {
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
 //
 //            }
-
-            showFragment(getSupportFragmentManager(), new LogInFragment().getInstance());
-        }
-
-//        findViewById(R.id.goToSignIn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showFragment(getSupportFragmentManager(), new LogInFragment());
-//            }
-//        });
 //
-//        findViewById(R.id.goToSignUp).setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View view) {
-//                showFragment(getSupportFragmentManager(), new RegistryFragment());
+//            public void onComplete() {
+//                tokenUseCase.dispose();
+//                removeProgress(getSupportFragmentManager());
 //            }
 //        });
 
+        showFragment(getSupportFragmentManager(), new LogInFragment().getInstance());
     }
 
     public static void setPreferences(String key, String value) {
@@ -67,5 +65,19 @@ public class EntryActivity extends FragmentActivity {
         fragmentTransaction.replace(R.id.entryContainer, fragment, fragment.getClass().getName());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    public static void showProgress(FragmentManager fragmentManager) {
+        ProgressBarFragment progressBar = new ProgressBarFragment().getInstance();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.entryContainer, progressBar);
+        transaction.setPrimaryNavigationFragment(progressBar);
+        transaction.commit();
+    }
+
+    public static void removeProgress(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.remove(new ProgressBarFragment().getInstance());
+        transaction.commit();
     }
 }
