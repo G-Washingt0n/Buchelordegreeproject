@@ -1,6 +1,7 @@
 package com.pgmail.martsulg.buchelordegreeproject.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,9 @@ import com.pgmail.martsulg.buchelordegreeproject.R;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.LogInFragment;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.ProgressBarFragment;
 
+import io.reactivex.observers.DisposableObserver;
+import p.martsulg.domain.entry.ValidTokenUseCase;
+
 public class EntryActivity extends FragmentActivity {
     public static SharedPreferences preferences;
 
@@ -20,7 +24,7 @@ public class EntryActivity extends FragmentActivity {
     public static final String TOKEN_NAME = "Token";
     public static final String USER_ID = "ID";
 
-//    ValidTokenUseCase tokenUseCase = new ValidTokenUseCase();
+    ValidTokenUseCase tokenUseCase = new ValidTokenUseCase();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,28 +32,28 @@ public class EntryActivity extends FragmentActivity {
         setContentView(R.layout.activity_entry);
 
         preferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//        showProgress(getSupportFragmentManager());
-//        tokenUseCase.execute(preferences.getString(TOKEN_NAME, null), new DisposableObserver<Boolean>() {
-//            @Override
-//            public void onNext(Boolean response) {
-//                if (response) {
-//                    Intent intent = new Intent(EntryActivity.this, NavigationActivity.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                tokenUseCase.dispose();
-//                removeProgress(getSupportFragmentManager());
-//            }
-//        });
+        showProgress(getSupportFragmentManager());
+        tokenUseCase.execute(preferences.getString(TOKEN_NAME, null), new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean response) {
+                if (response) {
+                    Intent intent = new Intent(EntryActivity.this, NavigationActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                tokenUseCase.dispose();
+                removeProgress(getSupportFragmentManager());
+            }
+        });
 
         showFragment(getSupportFragmentManager(), new LogInFragment().getInstance());
     }

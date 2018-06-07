@@ -2,13 +2,14 @@ package p.martsulg.data.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by g_washingt0n on 12.02.2018.
  */
 
 public class TrainingsFeed {
     private float complexity;
-    @SerializedName("training_name")
     private String trainingName;
     private int weekday;
     private long time;
@@ -17,7 +18,16 @@ public class TrainingsFeed {
     private long created;
     private String ownerId;
     private String objectId;
-//    private List<ListExercises> exercises;
+    @SerializedName("exercise")
+    private List<ExercisesFeed> exercises;
+
+    public List<ExercisesFeed> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<ExercisesFeed> exercises) {
+        this.exercises = exercises;
+    }
 
     public float getComplexity() {
         return complexity;

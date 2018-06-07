@@ -10,41 +10,40 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
-import com.pgmail.martsulg.buchelordegreeproject.activities.EntryActivity;
 import com.pgmail.martsulg.buchelordegreeproject.activities.NavigationActivity;
-import com.pgmail.martsulg.buchelordegreeproject.adapters.TrainingsAdapter;
-import com.pgmail.martsulg.buchelordegreeproject.fragments.ExercisesFragment;
-import com.pgmail.martsulg.buchelordegreeproject.fragments.TrainingConstructFragment;
+import com.pgmail.martsulg.buchelordegreeproject.adapters.ExercisesAdapter;
+import com.pgmail.martsulg.buchelordegreeproject.fragments.ExerciseConstructFragment;
 
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
+import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.RequestParams;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
-import p.martsulg.domain.trainings.AddTrainingUseCase;
-import p.martsulg.domain.trainings.DelTrainingUseCase;
-import p.martsulg.domain.trainings.GetTrainingsListUseCase;
+import p.martsulg.domain.trainings.AddExerciseUseCase;
+import p.martsulg.domain.trainings.DelExerciseUseCase;
+import p.martsulg.domain.trainings.GetExerсisesListUseCase;
 
 /**
  * Created by g_washingt0n on 07.02.2018.
  */
 
-public class TrainingsViewModel implements MyViewModel {
-    //remove token - ?
-    private String token = EntryActivity.preferences.getString("Token", null);
-    public TrainingsAdapter adapter;
+public class ExercisesViewModel implements MyViewModel {
+    public ExercisesAdapter adapter;
     private FragmentActivity activity;
-    private GetTrainingsListUseCase listUseCase = new GetTrainingsListUseCase();
-    private AddTrainingUseCase addUseCase = new AddTrainingUseCase();
-    private DelTrainingUseCase delUseCase = new DelTrainingUseCase();
-    private List<TrainingsFeed> trainings;
+    private GetExerсisesListUseCase listUseCase = new GetExerсisesListUseCase();
+    private AddExerciseUseCase addUseCase = new AddExerciseUseCase();
+    private DelExerciseUseCase delUseCase = new DelExerciseUseCase();
+    private List<ExercisesFeed> exercises;
     //    private ArrayList<ListTrainings> adapterList;
     private UserInfo user = new UserInfo().getInstance();
+    private String currentTrainingId;
 
-    public TrainingsViewModel(FragmentActivity activity) {
+    public ExercisesViewModel(FragmentActivity activity, String trainingId) {
         this.activity = activity;
-        adapter = new TrainingsAdapter(activity, this);
+        adapter = new ExercisesAdapter(activity, this, null);
+        currentTrainingId = trainingId;
     }
 
     @Override
@@ -71,15 +70,15 @@ public class TrainingsViewModel implements MyViewModel {
     @Override
     public void getRequest() {
         RequestParams params = new RequestParams();
-        params.setOwnerId(user.getOwnerId());
+        params.setObjectId(currentTrainingId);
 
-        listUseCase.execute(params, new DisposableObserver<List<TrainingsFeed>>() {
+        listUseCase.execute(params, new DisposableObserver<TrainingsFeed>() {
             @Override
-            public void onNext(List<TrainingsFeed> trainingsFeeds) {
-                trainings = trainingsFeeds;
-                adapter.dataChanged(trainingsFeeds);
+            public void onNext(TrainingsFeed feed) {
+                exercises = feed.getExercises();
+                adapter.dataChanged(feed.getExercises());
                 adapter.notifyDataSetChanged();
-                Log.e("adapter notify", String.valueOf(trainingsFeeds.size()));
+                Log.e("adapter notify", String.valueOf(feed.getExercises().size()));
             }
 
             @Override
@@ -125,7 +124,8 @@ public class TrainingsViewModel implements MyViewModel {
     }
 
     public void onFabClick() {
-        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), new TrainingConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
+        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
+//        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), new TrainingConstructFragment().getInstance(null));
     }
 
     public void menuAction(final ImageButton moreBtn, final int position) {
@@ -139,13 +139,12 @@ public class TrainingsViewModel implements MyViewModel {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case 0: //edit
-                        openExtraFragment(new TrainingConstructFragment().getInstance(activity.getSupportFragmentManager(), trainings.get(position)));
+                        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
 //                        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
-//                                new TrainingConstructFragment().getInstance(trainings.get(position)));
+//                                new TrainingConstructFragment().getInstance(exercises.get(position)));
                         break;
                     case 1: //delete
                         delRequest();
-                        adapter.notifyDataSetChanged();     //не забыть обновить данные
                         break;
                     case 2: //share
                         //TODO
@@ -157,8 +156,8 @@ public class TrainingsViewModel implements MyViewModel {
     }
 
     public void goFurther(int position) {
-        openExtraFragment(ExercisesFragment.getInstance(activity.getSupportFragmentManager(), trainings.get(position)));
-//        Toast.makeText(activity, "Tap on trainings item #" + position,
+//        openExtraFragment(no new  );
+//        Toast.makeText(activity, "Tap on exercises item #" + position,
 //                Toast.LENGTH_LONG).show();
     }
 

@@ -13,7 +13,6 @@ import p.martsulg.domain.UseCase;
  */
 
 public class GetTrainingsListUseCase extends UseCase<RequestParams, List<TrainingsFeed>> {
-
     @Override
     protected Observable<List<TrainingsFeed>> buildUseCase(RequestParams requestParams) {
         return RestService.getInstance().getTrainings(requestParams);

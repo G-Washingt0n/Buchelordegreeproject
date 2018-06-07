@@ -15,9 +15,15 @@
     <string name="or"> - OR - </string>
     <string name="setTrainingTime"> Your training begins at: </string>
     <string name="setTime"> Ready </string>
+    <string name="edit"> Edit </string>
+    <string name="delete"> Delete </string>
+    <string name="share"> Share </string>
+    <string name="exercises">Exercises</string>
+    <string name="trainings_list">Trainings list</string>
 
 
     <string-array name="weekdays">
+        <item name="selector">- Select your training day -</item>
         <item name="monday">Monday</item>
         <item name="tuesday">Tuesday</item>
         <item name="wednesday">Wednesday</item>

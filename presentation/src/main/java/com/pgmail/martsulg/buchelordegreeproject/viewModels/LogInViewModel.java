@@ -4,7 +4,7 @@ package com.pgmail.martsulg.buchelordegreeproject.viewModels;
 import android.content.Intent;
 import android.databinding.ObservableField;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.pgmail.martsulg.buchelordegreeproject.activities.EntryActivity;
 import com.pgmail.martsulg.buchelordegreeproject.activities.NavigationActivity;
@@ -63,8 +63,8 @@ public class LogInViewModel {
 
             @Override
             public void onError(@NonNull Throwable e) {
-//TODO remove with error fields in TextInputFields
-                Log.e("Signing in Error", e.toString());
+                //TODO remove with error fields in TextInputFields
+                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT);
                 EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
 

@@ -6,6 +6,15 @@ package p.martsulg.data.models;
 
 public class RequestParams {
     private String ownerId;
+    private String objectId;
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
 
     public String getOwnerId() {
         return ownerId;

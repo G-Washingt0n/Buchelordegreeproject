@@ -19,7 +19,6 @@ import com.pgmail.martsulg.buchelordegreeproject.viewModels.TrainingsViewModel;
  */
 
 public class TrainingsFragment extends MyFragment {
-    private static final int PAGE_SIZE = 5;
 
     public static TrainingsFragment getInstance(FragmentManager fragmentManager) {
         Fragment fragment = fragmentManager

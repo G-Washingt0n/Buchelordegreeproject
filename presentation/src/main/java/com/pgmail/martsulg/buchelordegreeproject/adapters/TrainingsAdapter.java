@@ -8,19 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
-import com.pgmail.martsulg.buchelordegreeproject.activities.NavigationActivity;
+import com.pgmail.martsulg.buchelordegreeproject.extras.CustomDateUtils;
 import com.pgmail.martsulg.buchelordegreeproject.extras.WeekdaysEnum;
-import com.pgmail.martsulg.buchelordegreeproject.fragments.TrainingConstructFragment;
+import com.pgmail.martsulg.buchelordegreeproject.viewModels.TrainingsViewModel;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import p.martsulg.data.models.TrainingsFeed;
 //import p.martsulg.domain.DelCommentUseCase;
@@ -31,11 +25,13 @@ import p.martsulg.data.models.TrainingsFeed;
 
 public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Holder> {
     private FragmentActivity activity;
+    private TrainingsViewModel viewModel;
     private List<TrainingsFeed> trainings;
     private int itemCount = 0;
 
-    public TrainingsAdapter(FragmentActivity activity) {
+    public TrainingsAdapter(FragmentActivity activity, TrainingsViewModel trainingsViewModel) {
         this.activity = activity;
+        this.viewModel = trainingsViewModel;
     }
 
     public static class Holder extends RecyclerView.ViewHolder {
@@ -66,43 +62,41 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
     public Holder onCreateViewHolder(final ViewGroup parent, int viewType) {
         final View root = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_training, parent, false);
-        root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(parent.getContext(), "Short Tap on trainings item!",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-        root.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(parent.getContext(), "Long Tap on trainings item!",
-                        Toast.LENGTH_LONG).show();
-                NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
-                        new TrainingConstructFragment().getInstance(trainings.get(root.getVerticalScrollbarPosition())));
-                return true;
-            }
-        });
+
+//        root.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(parent.getContext(), "Short Tap on trainings item!",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        root.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Toast.makeText(parent.getContext(), "Long Tap on trainings item!",
+//                        Toast.LENGTH_LONG).show();
+//                NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
+//                        new TrainingConstructFragment().getInstance(trainings.get(root.getVerticalScrollbarPosition())));
+//                return true;
+//            }
+//        });
 
         return new Holder(root);
     }
 
     @Override
-    public void onBindViewHolder(TrainingsAdapter.Holder holder, final int position) {
+    public void onBindViewHolder(final TrainingsAdapter.Holder holder, final int position) {
         holder.trainingDay.setText(WeekdaysEnum.convertIntToShortDay(trainings.get(position).getWeekday()));
         //TODO remove with date convertor
         holder.trainingCreated.setText(fieldSelector(position));//String.valueOf(trainings.get(position).getCreated()));
-        DateFormat format = new SimpleDateFormat("d.M.yy", Locale.ENGLISH);
-        holder.trainingTime.setText(millisToTime(trainings.get(position).getTime()));//String.valueOf(trainings.get(position).getTime()));
+        holder.trainingTime.setText(CustomDateUtils.millisToTime(trainings.get(position).getTime()));//String.valueOf(trainings.get(position).getTime()));
         holder.trainingName.setText(trainings.get(position).getTrainingName());
         holder.trainingComplexity.setRating(trainings.get(position).getComplexity());
-        holder.moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.moreBtn.setOnClickListener(v ->
+                viewModel.menuAction(holder.moreBtn, position));
 
-            }
-        });
-
+        holder.itemView.setOnClickListener((v) ->
+                viewModel.goFurther(position));
 
 
 
@@ -156,45 +150,17 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
         this.trainings = trainings;
         notifyDataSetChanged();
         itemCount = trainings.size();
-        new TrainingsAdapter(activity);
     }
 
     private String fieldSelector(int position) {
         if (trainings.get(position).getUpdated() != 0) {
-            return "updated: " + millisToDate(trainings.get(position).getUpdated());
+            return "updated: " + CustomDateUtils.millisToDate(trainings.get(position).getUpdated());
         } else {
-            return "created: " + millisToDate(trainings.get(position).getCreated());
+            return "created: " + CustomDateUtils.millisToDate(trainings.get(position).getCreated());
         }
     }
 
-    private String millisToDate(long millis) {
-//        Date date = new Date(millis);
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
-        String str = cal.get(Calendar.DAY_OF_MONTH) + "." + cal.get(Calendar.MONTH) + "." + cal.get(Calendar.YEAR);
-//        DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
-//        try {
-//            Date date = format.parse(cal.toString());
-//            return date.toString();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-        return str;
-    }
 
-    private String millisToTime(long millis) {
-        Calendar cal = new GregorianCalendar();//Calendar.getInstance();
-        cal.setTimeInMillis(millis);
-        String str = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
 
-//        DateFormat format = new SimpleDateFormat("h:mm", Locale.ENGLISH);
-//        try {
-//            Date date = format.parse(str);
-//            return date.toString();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-        return str;//cal.getTime().toString();
-    }
 
 }

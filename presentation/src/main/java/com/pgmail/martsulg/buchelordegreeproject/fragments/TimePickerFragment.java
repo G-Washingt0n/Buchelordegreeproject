@@ -3,17 +3,18 @@ package com.pgmail.martsulg.buchelordegreeproject.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
 import com.pgmail.martsulg.buchelordegreeproject.activities.NavigationActivity;
+import com.pgmail.martsulg.buchelordegreeproject.extras.TimePickerListener;
 
 import java.util.Calendar;
 
@@ -24,30 +25,31 @@ import java.util.Calendar;
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
-    private TextView date;
+    private TimePickerListener listener;
 
-    public TimePickerFragment getInstance() {
-
-        if (date != null) {
-            Bundle bundle = new Bundle();
-            bundle.putString("time", date.toString());//.get()/*.toString()*/);
-            this.setArguments(bundle);
-            this.date = date;
-        } else {
-            this.setArguments(null);
-        }
-        return new TimePickerFragment();
+    public static TimePickerFragment getInstance(/*TimePickerListener trainingConstructFragment*/) {
+        TimePickerFragment fragment = new TimePickerFragment();
+        return fragment;
     }
 
-    private String time;
+    public void setListener(int h, int m) {
+        listener.onTimePicked(h, m);
+        ;
+    }
+
+    //    private OnTimePickedListener listener;
+//    public interface OnTimePickedListener {
+//        public void onTimePicked(int h, int m);
+//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (TimePickerListener) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (this.getArguments() != null) {
-            Bundle bundle = this.getArguments();
-            time = bundle.getString("time");
-        }
     }
 
     @NonNull
@@ -55,14 +57,11 @@ public class TimePickerFragment extends DialogFragment
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // устанавливаем текущее время для TimePicker
         Calendar calendar = Calendar.getInstance();
-        if (time != null) {
-            calendar.setTimeInMillis(Long.valueOf(time));
-        }
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
         Dialog picker = new TimePickerDialog(getActivity(), this, hour, minute, true);
-        picker.setTitle(getResources().getString(R.string.setTrainingTime));
+//        picker.setTitle(getResources().getString(R.string.setTrainingTime));
 
         return picker;
     }
@@ -78,11 +77,14 @@ public class TimePickerFragment extends DialogFragment
 
     @Override
     public void onTimeSet(TimePicker view, int hours, int minute) {
-        // Выводим выбранное время
-//        TextView picker =
-//        picker.setText(hours);
+
         NavigationActivity.setPreferences(NavigationActivity.HOURS, hours);
         NavigationActivity.setPreferences(NavigationActivity.MINUTES, minute);
 //        date.setText(hours + minute);
+
+        listener.onTimePicked(hours, minute);
+        ;
+
+//        setListener(hours,minute);
     }
 }

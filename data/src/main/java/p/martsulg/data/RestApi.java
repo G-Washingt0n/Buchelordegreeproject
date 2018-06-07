@@ -4,6 +4,7 @@ package p.martsulg.data;
 import java.util.List;
 
 import io.reactivex.Observable;
+import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
 import p.martsulg.data.models.TrainingsFeed;
@@ -40,6 +41,9 @@ public interface RestApi {
 //("data/Timetable?{where}&sortBy=weekday%20asc")
     Observable<List<TrainingsFeed>> getTrainings(@Url String url); //@Query("where") String ownerId);
 
+    @GET
+    Observable<TrainingsFeed> getExercises(@Url String string);
+
     //    @GET
 //    Observable<UserInfo> getUserInfo(@Url String url);
     @GET("users/{userId}?props")
@@ -47,4 +51,11 @@ public interface RestApi {
 
     @POST("data/timetable")
     Observable<Void> newTraining(@Body TrainingsFeed feed);
+
+    @POST("data/timetable/{objectId}")
+    Observable<Void> updateTraining(@Body TrainingsFeed feed);
+
+    @POST("data/exercises")
+    Observable<Void> newExercise(@Body ExercisesFeed feed);
+
 }

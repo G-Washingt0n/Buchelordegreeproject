@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
 import p.martsulg.data.models.RequestParams;
@@ -49,7 +50,8 @@ public class RestService {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.backendless.com/C5528678-BFAB-F70F-FF82-D2CB10670100/0F2D67BF-E621-6650-FFB0-F02FF5CFC100/")
+                .baseUrl("https://api.backendless.com/C5528678-BFAB-F70F-FF82-D2CB10670100/" +
+                        "0F2D67BF-E621-6650-FFB0-F02FF5CFC100/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient).build();
@@ -57,34 +59,11 @@ public class RestService {
         restApi = retrofit.create(RestApi.class);
     }
 
-    /*
-    public Observable<ListComments> getComments(RequestParams params) {
-        return restApi.getComments(params.getToken());
-    }
-
-    public Observable<Object> addComment(RequestParams params) {
-        return restApi.addComment(params.getTitle(), params.getMessage(), params.getToken());
-    }
-
-    public Observable<Object> delComment(RequestParams params) {
-        return restApi.delComment(params.getCommentId(), params.getToken());
-    }*/
-
     public Observable<UserInfo> logUser(LogInUser user) {
         return restApi.logUser(user);
     }
 
     public Observable<UserInfo> regUser(RegisterUser profile) {
-
-//        RequestBody email =
-//                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getEmail());
-//        RequestBody password =
-//                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getPassword());
-//        RequestBody name =
-//                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getName());
-//        RequestBody avatar =
-//                RequestBody.create(MediaType.parse("multipart/form-data"), profile.getAvatar());
-
         return restApi.regUser(profile);
     }
 
@@ -97,13 +76,17 @@ public class RestService {
         url.append(request.getOwnerId());
         url.append("'&sortBy=weekday%20asc");
         return restApi.getTrainings(url.toString());
-//        return restApi.getTrainings("=ownerId%20%3D%20'"+ request.getOwnerId() + "'");
+    }
+
+    public Observable<TrainingsFeed> getExercises(RequestParams request) {
+        StringBuilder url = new StringBuilder("data/Timetable/");
+        url.append(request.getObjectId());
+        url.append("?loadRelations=exercise");
+//        url.append("'&sortBy=queuePos%20asc");
+        return restApi.getExercises(url.toString());
     }
 
     public Observable<UserInfo> getUserInfo(String string) {
-//        StringBuilder url = new StringBuilder("data/Users?where=email%20%3D%20'");
-//        url.append(string).append("'");
-//        return restApi.getUserInfo(url.toString());
         return restApi.getUserInfo(string);
     }
 
@@ -111,15 +94,8 @@ public class RestService {
         return restApi.newTraining(feed);
     }
 
-    /*public Observable<ListAnswers> getAnswers(AnswersParams params) {
-        return restApi.getAnswers(params.getCommentId(), params.getToken());
+    public Observable<Void> newExercise(ExercisesFeed feed) {
+        return restApi.newExercise(feed);
     }
 
-    public Observable<Object> delAnswer(AnswersParams params) {
-        return restApi.delAnswer(params.getCommentId(), params.getAnswerId(), params.getToken());
-    }
-
-    public Observable<Object> addAnswer(AnswersParams params) {
-        return restApi.addAnswer(params.getCommentId(), params.getMessage(), params.getToken());
-    }*/
 }

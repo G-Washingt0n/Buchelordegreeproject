@@ -4,9 +4,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
-            type="com.pgmail.martsulg.buchelordegreeproject.viewModels.TrainingConstructViewModel" />
+            type="com.pgmail.martsulg.buchelordegreeproject.viewModels.ExerciseConstructViewModel" />
     </data>
 
     <LinearLayout
@@ -20,14 +22,14 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="70dp"
             android:layout_marginEnd="50dp"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
             android:background="@color/softBlue">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/construct_name"
+                android:id="@+id/exercise_construct_name"
                 style="@style/textInputStyle"
                 android:layout_width="match_parent"
                 android:layout_marginEnd="20dp"
@@ -41,77 +43,59 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Training name"
+                    android:hint="Exercise name"
                     android:text="@={viewModel.name}" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/construct_day"
-                style="@style/textInputStyle"
-                android:layout_width="match_parent"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android.support.design:layout_constraintEnd_toEndOf="parent"
-                android.support.design:layout_constraintStart_toStartOf="parent"
-                android.support.design:layout_constraintTop_toBottomOf="@+id/construct_name">
-
-                <Spinner
-                    android:id="@+id/construct_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="36sp" />
-            </android.support.design.widget.TextInputLayout>
-
             <TextView
-                android:id="@+id/construct_time"
+                android:id="@+id/exercise_repeatable"
                 style="@style/textViewStyle"
-                android:text="Time:"
+                android:text="Repeatable"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android.support.design:layout_constraintStart_toStartOf="parent"
-                android.support.design:layout_constraintTop_toBottomOf="@+id/construct_day" />
+                android.support.design:layout_constraintTop_toBottomOf="@+id/exercise_construct_name" />
 
-            <TextView
-                android:id="@+id/timePicker"
-                style="@style/textViewStyle"
-                android:layout_marginEnd="8dp"
+            <CheckBox
+                android:id="@+id/exercise_checkBox"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
-                android:hint="select"
-                android:onClick="@{() -> viewModel.onTimePickerClick()}"
-                android:text="@={viewModel.time}"
+                android:checked="@={viewModel.repeatable}"
                 android.support.design:layout_constraintEnd_toEndOf="parent"
-                android.support.design:layout_constraintHorizontal_bias="0.109"
-                android.support.design:layout_constraintStart_toEndOf="@+id/construct_time"
-                android.support.design:layout_constraintTop_toBottomOf="@+id/construct_day" />
+                android.support.design:layout_constraintStart_toEndOf="@+id/exercise_repeatable"
+                android.support.design:layout_constraintTop_toBottomOf="@id/exercise_construct_name" />
 
             <TextView
-                android:id="@+id/construct_complexity"
+                android:id="@+id/exercise_construct_sets"
                 style="@style/textViewStyle"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
-                android:text="Select complexity:"
-                android.support.design:layout_constraintEnd_toEndOf="parent"
+                android:text="Sets number:"
                 android.support.design:layout_constraintHorizontal_bias="0.0"
                 android.support.design:layout_constraintStart_toStartOf="parent"
-                android.support.design:layout_constraintTop_toBottomOf="@+id/construct_time" />
+                android.support.design:layout_constraintTop_toBottomOf="@+id/exercise_repeatable" />
 
-            <RatingBar
-                android:id="@+id/construct_ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:numStars="5"
-                android:rating="@={viewModel.stars}"
-                android.support.design:layout_constraintTop_toBottomOf="@id/construct_complexity"
+            <EditText
+                android:id="@+id/exercise_setsNum"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:hint="num"
+                android:visibility="@{viewModel.repeatable ? View.VISIBLE : View.GONE}"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:text="@={viewModel.sets}"
                 android.support.design:layout_constraintEnd_toEndOf="parent"
-                android.support.design:layout_constraintStart_toStartOf="parent" />
+                android.support.design:layout_constraintStart_toEndOf="@id/exercise_construct_sets"
+                android.support.design:layout_constraintTop_toBottomOf="@+id/exercise_repeatable" />
+
 
             <TextView
-                android:id="@+id/construct_applyBtn"
+                android:id="@+id/exercise_applyBtn"
                 style="@style/textViewStyle"
                 android:layout_marginBottom="24dp"
                 android:layout_marginEnd="20dp"
@@ -121,7 +105,7 @@
                 android:onClick="@{() -> viewModel.onApplyClick()}"
                 android.support.design:layout_constraintBottom_toBottomOf="parent"
                 android.support.design:layout_constraintEnd_toEndOf="parent"
-                android.support.design:layout_constraintTop_toBottomOf="@+id/construct_ratingBar"
+                android.support.design:layout_constraintTop_toBottomOf="@+id/exercise_sets"
                 android.support.design:layout_constraintVertical_bias="1.0" />
 
             <TextView
@@ -133,7 +117,7 @@
                 android:textColor="@color/red"
                 android:onClick="@{() -> viewModel.onCancelClick()}"
                 android.support.design:layout_constraintBottom_toBottomOf="parent"
-                android.support.design:layout_constraintEnd_toStartOf="@id/construct_applyBtn"
+                android.support.design:layout_constraintEnd_toStartOf="@id/exercise_applyBtn"
                 android.support.design:layout_constraintHorizontal_bias="1.0"
                 android.support.design:layout_constraintStart_toStartOf="parent" />
 

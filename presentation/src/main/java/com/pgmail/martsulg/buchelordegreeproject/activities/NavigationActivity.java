@@ -32,6 +32,8 @@ public class NavigationActivity extends AppCompatActivity
     public static final String WEEKDAY = "weekday";
     public static final String TIME = "time";
     public static final String COMPLEXITY = "complexity";
+    public static final String NUMBER = "number";
+    public static final String POSITION = "position";
 
     private GetUserInfoUseCase userInfoUseCase = new GetUserInfoUseCase();
 
@@ -49,6 +51,7 @@ public class NavigationActivity extends AppCompatActivity
                     public void onNext(UserInfo userResponse) {
                         UserInfo user = new UserInfo();
                         user.renewUserInfo(userResponse);
+                        user.setToken(preferences.getString(EntryActivity.TOKEN_NAME, null));
                     }
 
                     @Override
@@ -123,6 +126,10 @@ public class NavigationActivity extends AppCompatActivity
                 .apply();
     }
 
-
+    public static void removePreferences(String key) {
+        preferences.edit()
+                .remove(key)
+                .apply();
+    }
 
 }
