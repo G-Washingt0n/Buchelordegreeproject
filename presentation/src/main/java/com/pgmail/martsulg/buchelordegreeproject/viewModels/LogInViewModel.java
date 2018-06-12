@@ -51,11 +51,6 @@ public class LogInViewModel {
                 if (response != null) {
                     EntryActivity.setPreferences(TOKEN_NAME, response.getToken());
                     EntryActivity.setPreferences(EntryActivity.USER_ID, response.getObjectId());
-                    //intent.putExtra("Token",EntryActivity.preferences.getString("Token", null));
-//                    UserInfo user = new UserInfo().getInstance();
-//                    user.setAge(response.getAge());
-//                    user.setOwnerId(response.getOwnerId());
-
                     activity.startActivity(intent);
                     activity.finish();
                 }
@@ -98,7 +93,6 @@ public class LogInViewModel {
             @Override
             public void onComplete() {
                 tokenUseCase.dispose();
-//                EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
         });
         EntryActivity.removeProgress(activity.getSupportFragmentManager());

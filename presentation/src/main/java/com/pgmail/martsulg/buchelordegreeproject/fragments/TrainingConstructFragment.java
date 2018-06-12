@@ -23,7 +23,7 @@ public class TrainingConstructFragment extends MyFragment {
 
     public TrainingConstructFragment getInstance(FragmentManager fragmentManager, TrainingsFeed feed) {
         Fragment fragment = fragmentManager
-                .findFragmentByTag(TrainingsFragment.class.getName());
+                .findFragmentByTag(TrainingConstructFragment.class.getName());
         TrainingConstructFragment trainingConstructFragment;
         if (fragment != null && fragment instanceof TrainingsFragment) {
             trainingConstructFragment = (TrainingConstructFragment) fragment;

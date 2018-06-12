@@ -123,6 +123,10 @@ public class ExercisesViewModel implements MyViewModel {
 //        });
     }
 
+    public void onPlayClick() {
+        //TODO add timer screen
+    }
+
     public void onFabClick() {
         openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
 //        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), new TrainingConstructFragment().getInstance(null));

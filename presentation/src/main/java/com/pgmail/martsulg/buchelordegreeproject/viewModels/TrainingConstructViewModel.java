@@ -136,7 +136,7 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
     }
 
     public void onTimePickerClick() {
-        DialogFragment newFragment = TimePickerFragment.getInstance(/*trainingConstructFragment*/);
+        DialogFragment newFragment = TimePickerFragment.getInstance();//trainingConstructFragment);
 
         newFragment.show(trainingConstructFragment.getFragmentManager(), "timePicker");
     }

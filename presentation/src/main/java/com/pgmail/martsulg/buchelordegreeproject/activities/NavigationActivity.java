@@ -13,8 +13,6 @@ import android.view.MenuItem;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.ProfileFragment;
-import com.pgmail.martsulg.buchelordegreeproject.fragments.ProgressBarFragment;
-import com.pgmail.martsulg.buchelordegreeproject.fragments.ProgressFragment;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.TrainingsFragment;
 
 import io.reactivex.observers.DisposableObserver;
@@ -74,9 +72,6 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.navigation_trainings:
                 showFragment(getSupportFragmentManager(), TrainingsFragment.getInstance(getSupportFragmentManager()));
                 return true;
-            case R.id.navigation_progress:
-                showFragment(getSupportFragmentManager(), new ProgressFragment().newInstance());
-                return true;
             case R.id.navigation_profile:
                 showFragment(getSupportFragmentManager(), new ProfileFragment().newInstance());
                 return true;
@@ -92,32 +87,18 @@ public class NavigationActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    public static void showProgress(FragmentManager fragmentManager) {
-        ProgressBarFragment progressBar = new ProgressBarFragment().getInstance();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.navigation_container, progressBar);
-        transaction.setPrimaryNavigationFragment(progressBar);
-        transaction.commit();
-    }
-
-    public static void removeProgress(FragmentManager fragmentManager) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.remove(new ProgressBarFragment().getInstance());
-        transaction.commit();
-    }
-
     public static void putExtraFragment(FragmentManager fragmentManager, Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.navigation_container, fragment);
         transaction.addToBackStack(null);
         transaction.setPrimaryNavigationFragment(fragment);
-        transaction.commit();
+        transaction.attach(fragment).commit();
     }
 
     public static void removeExtraFragment(FragmentManager fragmentManager, Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.remove(fragment);
-        transaction.commit();
+        transaction.detach(fragment).commit();
     }
 
     public static void setPreferences(String key, int value) {

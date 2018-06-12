@@ -10,7 +10,6 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
-import com.pgmail.martsulg.buchelordegreeproject.activities.EntryActivity;
 import com.pgmail.martsulg.buchelordegreeproject.activities.NavigationActivity;
 import com.pgmail.martsulg.buchelordegreeproject.adapters.TrainingsAdapter;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.ExercisesFragment;
@@ -31,15 +30,13 @@ import p.martsulg.domain.trainings.GetTrainingsListUseCase;
  */
 
 public class TrainingsViewModel implements MyViewModel {
-    //remove token - ?
-    private String token = EntryActivity.preferences.getString("Token", null);
+
     public TrainingsAdapter adapter;
     private FragmentActivity activity;
     private GetTrainingsListUseCase listUseCase = new GetTrainingsListUseCase();
     private AddTrainingUseCase addUseCase = new AddTrainingUseCase();
     private DelTrainingUseCase delUseCase = new DelTrainingUseCase();
     private List<TrainingsFeed> trainings;
-    //    private ArrayList<ListTrainings> adapterList;
     private UserInfo user = new UserInfo().getInstance();
 
     public TrainingsViewModel(FragmentActivity activity) {
@@ -100,28 +97,7 @@ public class TrainingsViewModel implements MyViewModel {
 
     @Override
     public void addRequest() {
-//        RequestParams params = new RequestParams();
-//        params.setTitle(title2send.get());
-//        params.setMessage(comment2send.get());
-//        params.setToken(EntryActivity.preferences.getString("Token", null));
-//        addUseCase.execute(params, new DisposableObserver<Object>() {
-//            @Override
-//            public void onNext(Object o) {
-//                getRequest(currPage);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                comment2send.set(null);
-//                title2send.set(null);
-//                addUseCase.dispose();
-//            }
-//        });
+
     }
 
     public void onFabClick() {
@@ -158,8 +134,6 @@ public class TrainingsViewModel implements MyViewModel {
 
     public void goFurther(int position) {
         openExtraFragment(ExercisesFragment.getInstance(activity.getSupportFragmentManager(), trainings.get(position)));
-//        Toast.makeText(activity, "Tap on trainings item #" + position,
-//                Toast.LENGTH_LONG).show();
     }
 
     private void openExtraFragment(Fragment fragment) {

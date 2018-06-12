@@ -33,8 +33,6 @@ public class TrainingsFragment extends MyFragment {
         return trainingsFragment;
     }
 
-    private LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -107,7 +107,7 @@
             android:id="@+id/SignUpButton"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/calmBlue"
             android:onClick="@{() -> viewModel.onSignUpClick()}"
             android:text="@string/signUp"
@@ -122,35 +122,14 @@
             android:id="@+id/or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/or"
             android:textColor="@color/darkBlue"
             android:textSize="12sp"
-            android.support.design:layout_constraintBottom_toTopOf="@+id/fbBtn"
-            android.support.design:layout_constraintEnd_toEndOf="parent"
-            android.support.design:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/fbBtn"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/brightBlue"
-            android:text="Facebook"
-            android.support.design:layout_constraintBottom_toTopOf="@+id/twBtn"
-            android.support.design:layout_constraintEnd_toEndOf="parent"
-            android.support.design:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/twBtn"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/brightBlue"
-            android:text="Twitter"
             android.support.design:layout_constraintBottom_toTopOf="@+id/signInQuestion"
             android.support.design:layout_constraintEnd_toEndOf="parent"
             android.support.design:layout_constraintStart_toStartOf="parent" />
+
 
         <RelativeLayout
             android:id="@+id/signInQuestion"

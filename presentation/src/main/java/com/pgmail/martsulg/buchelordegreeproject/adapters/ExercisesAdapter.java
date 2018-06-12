@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
@@ -31,7 +32,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Hold
 
         TextView exerciseName;
         TextView exerciseSets;
-
+        ImageView exerciseStart;
         ImageButton moreBtn;
 
 
@@ -39,6 +40,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Hold
             super(itemView);
             exerciseName = itemView.findViewById(R.id.exercise_name);
             exerciseSets = itemView.findViewById(R.id.exercise_sets);
+            exerciseStart = itemView.findViewById(R.id.exercise_start);
             moreBtn = itemView.findViewById(R.id.exercise_moreBtn);
         }
     }
@@ -55,9 +57,8 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Hold
         holder.exerciseName.setText(exercises.get(position).getExerciseName());
         holder.exerciseSets.setText("Sets: " + exercises.get(position).getSetsNum());
         holder.moreBtn.setOnClickListener(v -> viewModel.menuAction(holder.moreBtn, position));
-
+        holder.exerciseStart.setOnClickListener(v -> viewModel.onPlayClick());
         holder.itemView.setOnClickListener(v -> viewModel.goFurther(position));
-
     }
 
     @Override

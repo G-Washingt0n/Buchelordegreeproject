@@ -27,8 +27,11 @@ public class TimePickerFragment extends DialogFragment
 
     private TimePickerListener listener;
 
-    public static TimePickerFragment getInstance(/*TimePickerListener trainingConstructFragment*/) {
+    public static TimePickerFragment getInstance
+
+    { //TimePickerListener trainingConstructFragment) {
         TimePickerFragment fragment = new TimePickerFragment();
+//        this.listener = trainingConstructFragment;
         return fragment;
     }
 
@@ -44,7 +47,7 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (TimePickerListener) context;
+        listener = (TimePickerListener) this;
     }
 
     @Override

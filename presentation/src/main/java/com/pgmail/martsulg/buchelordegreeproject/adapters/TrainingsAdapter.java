@@ -39,7 +39,6 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
         TextView trainingDay;
         TextView trainingCreated;
         TextView trainingName;
-        //        TextView showTraining;
         TextView trainingTime;
         RatingBar trainingComplexity;
         ImageButton moreBtn;
@@ -51,7 +50,6 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
             trainingDay = itemView.findViewById(R.id.training_day);
             trainingCreated = itemView.findViewById(R.id.training_created);
             trainingName = itemView.findViewById(R.id.training_name);
-//            showTraining = itemView.findViewById(R.id.show_training);
             trainingTime = itemView.findViewById(R.id.training_time);
             trainingComplexity = itemView.findViewById(R.id.training_complexity);
             moreBtn = itemView.findViewById(R.id.training_moreBtn);
@@ -62,25 +60,6 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
     public Holder onCreateViewHolder(final ViewGroup parent, int viewType) {
         final View root = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_training, parent, false);
-
-//        root.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(parent.getContext(), "Short Tap on trainings item!",
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        });
-//        root.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                Toast.makeText(parent.getContext(), "Long Tap on trainings item!",
-//                        Toast.LENGTH_LONG).show();
-//                NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
-//                        new TrainingConstructFragment().getInstance(trainings.get(root.getVerticalScrollbarPosition())));
-//                return true;
-//            }
-//        });
-
         return new Holder(root);
     }
 
@@ -88,8 +67,8 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
     public void onBindViewHolder(final TrainingsAdapter.Holder holder, final int position) {
         holder.trainingDay.setText(WeekdaysEnum.convertIntToShortDay(trainings.get(position).getWeekday()));
         //TODO remove with date convertor
-        holder.trainingCreated.setText(fieldSelector(position));//String.valueOf(trainings.get(position).getCreated()));
-        holder.trainingTime.setText(CustomDateUtils.millisToTime(trainings.get(position).getTime()));//String.valueOf(trainings.get(position).getTime()));
+        holder.trainingCreated.setText(fieldSelector(position));
+        holder.trainingTime.setText(CustomDateUtils.millisToTime(trainings.get(position).getTime()));
         holder.trainingName.setText(trainings.get(position).getTrainingName());
         holder.trainingComplexity.setRating(trainings.get(position).getComplexity());
         holder.moreBtn.setOnClickListener(v ->
@@ -97,47 +76,6 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
 
         holder.itemView.setOnClickListener((v) ->
                 viewModel.goFurther(position));
-
-
-
-
-
-        /*holder.showTraining.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                showFragment(manager, new AnswersFragment().newInstance(manager, trainings.get(position)));
-
-            }
-        });
-        */
-
-//        holder.commDel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final DelCommentUseCase delUseCase = new DelCommentUseCase();
-//                RequestParams params = new RequestParams();
-//                params.setCommentId(trainings.get(position).getComment_id());
-//                params.setToken(EntryActivity.preferences.getString("Token", null));
-//                delUseCase.execute(params, new DisposableObserver<Object>() {
-//                    @Override
-//                    public void onNext(Object o) {
-//                        trainings.remove(position);
-//                        dataChanged(trainings);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("Error removing comment", e.toString());
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        delUseCase.dispose();
-//                    }
-//                });
-//            }
-//        });
 
     }
 
