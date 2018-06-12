@@ -1,6 +1,7 @@
 package com.pgmail.martsulg.bachelordegreeproject.adapters;
 
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.pgmail.martsulg.bachelordegreeproject.extras.CustomDateUtils;
 import com.pgmail.martsulg.bachelordegreeproject.extras.WeekdaysEnum;
 import com.pgmail.martsulg.bachelordegreeproject.viewModels.TrainingsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import p.martsulg.data.models.TrainingsFeed;
@@ -26,7 +28,7 @@ import p.martsulg.data.models.TrainingsFeed;
 public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Holder> {
     private FragmentActivity activity;
     private TrainingsViewModel viewModel;
-    private List<TrainingsFeed> trainings;
+    private List<TrainingsFeed> trainings = new ArrayList<>();
     private int itemCount = 0;
 
     public TrainingsAdapter(FragmentActivity activity, TrainingsViewModel trainingsViewModel) {
@@ -85,8 +87,10 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Hold
     }
 
     public void dataChanged(List<TrainingsFeed> trainings) {
+        TrainingsFeedDiffUtillCallback diffUtillCallback = new TrainingsFeedDiffUtillCallback(this.trainings, trainings);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(diffUtillCallback, true);
         this.trainings = trainings;
-        notifyDataSetChanged();
+        result.dispatchUpdatesTo(this);
         itemCount = trainings.size();
     }
 

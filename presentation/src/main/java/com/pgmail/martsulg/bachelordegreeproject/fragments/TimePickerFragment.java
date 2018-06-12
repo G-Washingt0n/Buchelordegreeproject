@@ -27,7 +27,7 @@ public class TimePickerFragment extends DialogFragment
 
     private TimePickerListener listener;
 
-    public static TimePickerFragment getInstance() { //TimePickerListener trainingConstructFragment) {
+    public static TimePickerFragment getInstance(TimePickerListener listener) {
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.listener = listener;
         return fragment;
