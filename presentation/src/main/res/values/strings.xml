@@ -20,6 +20,9 @@
     <string name="share"> Share </string>
     <string name="exercises">Exercises</string>
     <string name="trainings_list">Trainings list</string>
+    <string name="table_timetable">timetable</string>
+    <string name="table_exercises">exercises</string>
+    <string name="table_sets">sets</string>
     <string name="log_in">Log in</string>
     <string name="sets">Sets: %d</string>
     <string name="fields_cannot_be_empty">Fields can not be empty!</string>

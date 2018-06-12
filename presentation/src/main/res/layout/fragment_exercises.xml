@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.pgmail.martsulg.buchelordegreeproject.viewModels.ExercisesViewModel" />
+            type="com.pgmail.martsulg.bachelordegreeproject.viewModels.ExercisesViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

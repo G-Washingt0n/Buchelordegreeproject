@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.pgmail.martsulg.buchelordegreeproject.viewModels.TrainingConstructViewModel" />
+            type="com.pgmail.martsulg.bachelordegreeproject.viewModels.TrainingConstructViewModel" />
     </data>
 
     <LinearLayout

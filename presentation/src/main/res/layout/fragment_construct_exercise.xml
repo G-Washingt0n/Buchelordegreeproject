@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.pgmail.martsulg.buchelordegreeproject.viewModels.ExerciseConstructViewModel" />
+            type="com.pgmail.martsulg.bachelordegreeproject.viewModels.ExerciseConstructViewModel" />
     </data>
 
     <LinearLayout

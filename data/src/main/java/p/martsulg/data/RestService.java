@@ -98,4 +98,11 @@ public class RestService {
         return restApi.newExercise(feed);
     }
 
+    public Observable<Long> delItem(RequestParams request) {
+        StringBuilder url = new StringBuilder("data/");
+        url.append(request.getTimetable() + "/")
+                .append(request.getObjectId());
+        return restApi.delItem(url.toString());
+    }
+
 }

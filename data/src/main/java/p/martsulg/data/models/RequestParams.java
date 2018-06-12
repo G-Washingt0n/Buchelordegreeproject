@@ -7,6 +7,15 @@ package p.martsulg.data.models;
 public class RequestParams {
     private String ownerId;
     private String objectId;
+    private String timetable;
+
+    public String getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(String timetable) {
+        this.timetable = timetable;
+    }
 
     public String getObjectId() {
         return objectId;
