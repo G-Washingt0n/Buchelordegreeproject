@@ -65,6 +65,7 @@
                 android:id="@+id/signUpEditEmail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
                 android:hint="@string/email"
                 android:text="@={viewModel.email2reg}" />
         </android.support.design.widget.TextInputLayout>
@@ -90,6 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/password"
+                android:inputType="textPassword"
                 android:text="@={viewModel.password2reg}" />
         </android.support.design.widget.TextInputLayout>
 

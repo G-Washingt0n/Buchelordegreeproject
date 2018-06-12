@@ -98,7 +98,7 @@ public class NavigationActivity extends AppCompatActivity
     public static void removeExtraFragment(FragmentManager fragmentManager, Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.remove(fragment);
-        transaction.detach(fragment).commit();
+        transaction.commitAllowingStateLoss();
     }
 
     public static void setPreferences(String key, int value) {

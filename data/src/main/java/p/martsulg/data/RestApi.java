@@ -37,7 +37,7 @@ public interface RestApi {
     Observable<UserInfo> getUserInfo(@Path("userId") String id);
 
     @POST("data/timetable")
-    Observable<Void> newTraining(@Body TrainingsFeed feed);
+    Observable<TrainingsFeed> newTraining(@Body TrainingsFeed feed);
 
     @POST("data/timetable/{objectId}")
     Observable<Void> updateTraining(@Body TrainingsFeed feed);

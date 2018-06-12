@@ -26,7 +26,8 @@
                 android:id="@+id/signInEditLogin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email"
                 android:text="@={viewModel.email2send}" />
         </android.support.design.widget.TextInputLayout>
 
@@ -41,7 +42,8 @@
                 android:id="@+id/signInEditPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Password"
+                android:inputType="textPassword"
+                android:hint="@string/password"
                 android:text="@={viewModel.password2send}" />
         </android.support.design.widget.TextInputLayout>
 
@@ -53,7 +55,7 @@
             android:layout_marginBottom="150dp"
             android:background="@color/calmBlue"
             android:onClick="@{() -> viewModel.onSignInClick()}"
-            android:text="Log in"
+            android:text="@string/log_in"
             android:textAllCaps="false"
             android:textColor="@color/headerText"
             android:textSize="24sp"

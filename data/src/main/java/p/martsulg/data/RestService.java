@@ -90,7 +90,7 @@ public class RestService {
         return restApi.getUserInfo(string);
     }
 
-    public Observable<Void> newTraining(TrainingsFeed feed) {
+    public Observable<TrainingsFeed> newTraining(TrainingsFeed feed) {
         return restApi.newTraining(feed);
     }
 

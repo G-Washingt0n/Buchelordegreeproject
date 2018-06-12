@@ -55,7 +55,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Hold
     @Override
     public void onBindViewHolder(final ExercisesAdapter.Holder holder, final int position) {
         holder.exerciseName.setText(exercises.get(position).getExerciseName());
-        holder.exerciseSets.setText("Sets: " + exercises.get(position).getSetsNum());
+        holder.exerciseSets.setText(activity.getString(R.string.sets, exercises.get(position).getSetsNum()));
         holder.moreBtn.setOnClickListener(v -> viewModel.menuAction(holder.moreBtn, position));
         holder.exerciseStart.setOnClickListener(v -> viewModel.onPlayClick());
         holder.itemView.setOnClickListener(v -> viewModel.goFurther(position));

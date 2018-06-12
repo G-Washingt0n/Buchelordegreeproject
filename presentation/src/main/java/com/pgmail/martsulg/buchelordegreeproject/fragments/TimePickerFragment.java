@@ -27,11 +27,9 @@ public class TimePickerFragment extends DialogFragment
 
     private TimePickerListener listener;
 
-    public static TimePickerFragment getInstance
-
-    { //TimePickerListener trainingConstructFragment) {
+    public static TimePickerFragment getInstance(TimePickerListener listener) {
         TimePickerFragment fragment = new TimePickerFragment();
-//        this.listener = trainingConstructFragment;
+        fragment.listener = listener;
         return fragment;
     }
 
@@ -47,7 +45,6 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (TimePickerListener) this;
     }
 
     @Override
@@ -83,11 +80,6 @@ public class TimePickerFragment extends DialogFragment
 
         NavigationActivity.setPreferences(NavigationActivity.HOURS, hours);
         NavigationActivity.setPreferences(NavigationActivity.MINUTES, minute);
-//        date.setText(hours + minute);
-
         listener.onTimePicked(hours, minute);
-        ;
-
-//        setListener(hours,minute);
     }
 }

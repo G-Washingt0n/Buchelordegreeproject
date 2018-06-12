@@ -70,4 +70,5 @@ public class TrainingConstructFragment extends MyFragment {
         binding.setViewModel(viewModel);
         return binding.getRoot();
     }
+
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.pgmail.martsulg.buchelordegreeproject.R;
 import com.pgmail.martsulg.buchelordegreeproject.activities.NavigationActivity;
@@ -16,7 +17,6 @@ import com.pgmail.martsulg.buchelordegreeproject.extras.TimePickerListener;
 import com.pgmail.martsulg.buchelordegreeproject.extras.WeekdaysEnum;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.TimePickerFragment;
 import com.pgmail.martsulg.buchelordegreeproject.fragments.TrainingConstructFragment;
-import com.pgmail.martsulg.buchelordegreeproject.fragments.TrainingsFragment;
 
 import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.TrainingsFeed;
@@ -136,7 +136,7 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
     }
 
     public void onTimePickerClick() {
-        DialogFragment newFragment = TimePickerFragment.getInstance();//trainingConstructFragment);
+        DialogFragment newFragment = TimePickerFragment.getInstance(this);
 
         newFragment.show(trainingConstructFragment.getFragmentManager(), "timePicker");
     }
@@ -152,34 +152,39 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
 
     @Override
     public void addRequest() {
-        TrainingsFeed feed = new TrainingsFeed();
-        feed.setTrainingName(name.get());
-        feed.setWeekday(WeekdaysEnum.convertDayToInt(day));
-        feed.setOwnerId(new UserInfo().getInstance().getOwnerId());
-        feed.setComplexity(stars.get());
-        feed.setTime(CustomDateUtils.timeToMillis(hours, minutes));
-        //взять дату из shared
+        if (name.get() != null && !day.equals("- Select your training day -") && stars.get() != null && time.get() != null) {
+            TrainingsFeed feed = new TrainingsFeed();
+            feed.setTrainingName(name.get());
+            feed.setWeekday(WeekdaysEnum.convertDayToInt(day));
+            feed.setOwnerId(new UserInfo().getInstance().getOwnerId());
+            feed.setComplexity(stars.get());
+            feed.setTime(CustomDateUtils.timeToMillis(hours, minutes));
+            //взять дату из shared
 //        feed.setToken(EntryActivity.preferences.getString("Token", null));
-        addUseCase.execute(feed, new DisposableObserver<Void>() {
-            @Override
-            public void onNext(Void aVoid) {
-                //clear shared
-//                NavigationActivity.removePreferences(NavigationActivity.HOURS);
-//                NavigationActivity.removePreferences(NavigationActivity.MINUTES);
-            }
+            addUseCase.execute(feed, new DisposableObserver<TrainingsFeed>() {
+                @Override
+                public void onNext(TrainingsFeed feed) {
+                    NavigationActivity.removeExtraFragment(activity.getSupportFragmentManager(), trainingConstructFragment);
+                    //clear shared
+    //                NavigationActivity.removePreferences(NavigationActivity.HOURS);
+    //                NavigationActivity.removePreferences(NavigationActivity.MINUTES);
+                }
 
-            @Override
-            public void onError(Throwable e) {
+                @Override
+                public void onError(Throwable e) {
 
-            }
+                }
 
-            @Override
-            public void onComplete() {
-                addUseCase.dispose();
-                activity.onBackPressed();
-                NavigationActivity.showFragment(activity.getSupportFragmentManager(), new TrainingsFragment().getParentFragment());
-            }
-        });
+                @Override
+                public void onComplete() {
+                    addUseCase.dispose();
+                    activity.onBackPressed();
+//                    NavigationActivity.showFragment(activity.getSupportFragmentManager(), new TrainingsFragment().getParentFragment());
+                }
+            });
+        } else {
+            Toast.makeText(activity, R.string.fields_cannot_be_empty, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
