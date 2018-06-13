@@ -18,10 +18,11 @@ import com.pgmail.martsulg.bachelordegreeproject.fragments.TrainingConstructFrag
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
+import p.martsulg.data.models.DeleteResponse;
 import p.martsulg.data.models.RequestParams;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
-import p.martsulg.domain.trainings.DelItemUseCase;
+import p.martsulg.domain.DelItemUseCase;
 import p.martsulg.domain.trainings.GetTrainingsListUseCase;
 
 /**
@@ -94,9 +95,9 @@ public class TrainingsViewModel implements MyViewModel {
         RequestParams params = new RequestParams();
         params.setObjectId(objectId);
         params.setTimetable(activity.getString(R.string.table_timetable));
-        delItemUseCase.execute(params, new DisposableObserver<Long>() {
+        delItemUseCase.execute(params, new DisposableObserver<DeleteResponse>() {
             @Override
-            public void onNext(Long aLong) {
+            public void onNext(DeleteResponse response) {
                 Toast.makeText(activity, "Item removed!", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();     //не забыть обновить данные
                 adapter.notifyItemRemoved(position);

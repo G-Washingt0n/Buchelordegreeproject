@@ -22,7 +22,7 @@ import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import p.martsulg.domain.trainings.AddTrainingUseCase;
-
+import p.martsulg.domain.trainings.UpdateTrainingUseCase;
 
 
 /**
@@ -32,6 +32,7 @@ import p.martsulg.domain.trainings.AddTrainingUseCase;
 public class TrainingConstructViewModel implements MyViewModel, TimePickerListener {
 
     private AddTrainingUseCase addUseCase = new AddTrainingUseCase();
+    private UpdateTrainingUseCase updateUseCase = new UpdateTrainingUseCase();
     private FragmentActivity activity;
     private Bundle bundle;
     private int hours;
@@ -52,7 +53,7 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
 
     @Override
     public void onTimePicked(int h, int m) {
-        setTimeField(h, m);
+        time.set(CustomDateUtils.timeToFormattedStr(h, m));
     }
 
     @Override
@@ -108,41 +109,48 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
     public void release() {
     }
 
-    private void setTimeField(int h, int m) {
-        //replace with service - ?
-        // add parameters
-
-        time.set(CustomDateUtils.timeToFormattedStr(h, m));
-
-//
-//        if (bundle != null) {
-//            time.set(bundle.getString("date"));
-//        } else if (NavigationActivity.preferences.getInt(NavigationActivity.HOURS, 0) != 0) {
-//            String str;
-//            hours = NavigationActivity.preferences.getInt(NavigationActivity.HOURS, 0);
-//            minutes = NavigationActivity.preferences.getInt(NavigationActivity.MINUTES, 0);
-////            str = String.format("%02d:%02d", hours, minutes);
-//            time.set(CustomDateUtils.timeToFormattedStr(h,m));
-////            str = hours + ":" + minutes;
-////            DateFormat format = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
-////            try {
-////                Date date = format.parse(str);
-////                time.set(date.toString());
-////            } catch (ParseException e) {
-////                e.printStackTrace();
-////                time.set(str);
-////            }
-//        }
-    }
-
     public void onTimePickerClick() {
         DialogFragment newFragment = TimePickerFragment.getInstance(this);
-
         newFragment.show(trainingConstructFragment.getFragmentManager(), "timePicker");
     }
 
     public void onApplyClick() {
-        addRequest();
+        if (bundle != null) {
+            updateRequest();
+        } else {
+            addRequest();
+        }
+    }
+
+    private void updateRequest() {
+        if (name.get() != null && !day.equals("- Select your training day -") && stars.get() != null && time.get() != null) {
+            TrainingsFeed feed = new TrainingsFeed();
+            feed.setTrainingName(name.get());
+            feed.setWeekday(WeekdaysEnum.convertDayToInt(day));
+            feed.setOwnerId(new UserInfo().getInstance().getOwnerId());
+            feed.setComplexity(stars.get());
+            feed.setTime(CustomDateUtils.timeToMillis(hours, minutes));
+
+            updateUseCase.execute(feed, new DisposableObserver<TrainingsFeed>() {
+                @Override
+                public void onNext(TrainingsFeed feed) {
+                    NavigationActivity.removeExtraFragment(activity.getSupportFragmentManager(), trainingConstructFragment);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
+                    addUseCase.dispose();
+//                    activity.onBackPressed();
+                }
+            });
+        } else {
+            Toast.makeText(activity, R.string.fields_cannot_be_empty, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onCancelClick() {
@@ -165,9 +173,6 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
                 @Override
                 public void onNext(TrainingsFeed feed) {
                     NavigationActivity.removeExtraFragment(activity.getSupportFragmentManager(), trainingConstructFragment);
-                    //clear shared
-    //                NavigationActivity.removePreferences(NavigationActivity.HOURS);
-    //                NavigationActivity.removePreferences(NavigationActivity.MINUTES);
                 }
 
                 @Override
@@ -178,8 +183,7 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
                 @Override
                 public void onComplete() {
                     addUseCase.dispose();
-                    activity.onBackPressed();
-//                    NavigationActivity.showFragment(activity.getSupportFragmentManager(), new TrainingsFragment().getParentFragment());
+//                    activity.onBackPressed();
                 }
             });
         } else {

@@ -17,13 +17,14 @@ import com.pgmail.martsulg.bachelordegreeproject.fragments.ExerciseConstructFrag
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
+import p.martsulg.data.models.DeleteResponse;
 import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.RequestParams;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
-import p.martsulg.domain.trainings.AddExerciseUseCase;
-import p.martsulg.domain.trainings.DelItemUseCase;
-import p.martsulg.domain.trainings.GetExerсisesListUseCase;
+import p.martsulg.domain.DelItemUseCase;
+import p.martsulg.domain.exercises.AddExerciseUseCase;
+import p.martsulg.domain.exercises.GetExerсisesListUseCase;
 
 /**
  * Created by g_washingt0n on 07.02.2018.
@@ -98,11 +99,11 @@ public class ExercisesViewModel implements MyViewModel {
         RequestParams params = new RequestParams();
         params.setObjectId(objectId);
         params.setTimetable(activity.getString(R.string.table_exercises));
-        delItemUseCase.execute(params, new DisposableObserver<Long>() {
+        delItemUseCase.execute(params, new DisposableObserver<DeleteResponse>() {
 
 
             @Override
-            public void onNext(Long aLong) {
+            public void onNext(DeleteResponse response) {
                 Toast.makeText(activity, "Item removed!", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();     //не забыть обновить данные
                 adapter.notifyItemRemoved(position);
@@ -111,16 +112,11 @@ public class ExercisesViewModel implements MyViewModel {
 
             @Override
             public void onError(Throwable e) {
-                Log.e("deleteError", e.getMessage());
-                Toast.makeText(activity, "Item removed!", Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();     //не забыть обновить данные
-                adapter.notifyItemRemoved(position);
-                getRequest();
+                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onComplete() {
-                adapter.notifyDataSetChanged();     //не забыть обновить данные
                 delItemUseCase.dispose();
             }
         });
@@ -136,7 +132,6 @@ public class ExercisesViewModel implements MyViewModel {
 
     public void onFabClick() {
         openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
-//        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), new TrainingConstructFragment().getInstance(null));
     }
 
     public void menuAction(final ImageButton moreBtn, final int position) {
@@ -173,7 +168,7 @@ public class ExercisesViewModel implements MyViewModel {
     }
 
     private void openExtraFragment(Fragment fragment) {
-        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), fragment);
+        NavigationActivity.showFragment(activity.getSupportFragmentManager(), fragment);
     }
 
 

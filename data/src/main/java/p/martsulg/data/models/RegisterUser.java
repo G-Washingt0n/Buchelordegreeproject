@@ -13,7 +13,16 @@ public class RegisterUser {
     private String name;
     @SerializedName("surname")
     private String surname;
+    @SerializedName("age")
+    private int age;
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public String getSurname() {
         return surname;

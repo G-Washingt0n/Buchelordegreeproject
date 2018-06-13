@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import p.martsulg.data.models.DeleteResponse;
 import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
@@ -98,11 +99,31 @@ public class RestService {
         return restApi.newExercise(feed);
     }
 
-    public Observable<Long> delItem(RequestParams request) {
+    public Observable<DeleteResponse> delItem(RequestParams request) {
         StringBuilder url = new StringBuilder("data/");
         url.append(request.getTimetable() + "/")
                 .append(request.getObjectId());
         return restApi.delItem(url.toString());
     }
+
+    public Observable<TrainingsFeed> updateTraining(TrainingsFeed feed) {
+        StringBuilder url = new StringBuilder("data/timetable/");
+        url.append(feed.getObjectId());
+        return restApi.updateTraining(url.toString(), feed);
+    }
+
+    public Observable<ExercisesFeed> updateExercise(ExercisesFeed feed) {
+        StringBuilder url = new StringBuilder("data/exercises/");
+        url.append(feed.getObjectId());
+        return restApi.updateExercise(url.toString(), feed);
+    }
+
+
+    public Observable<UserInfo> updateUser(UserInfo userInfo) {
+        StringBuilder url = new StringBuilder("users/");
+        url.append(userInfo.getObjectId());
+        return restApi.updateUser(url.toString(), userInfo);
+    }
+
 
 }

@@ -17,7 +17,7 @@ import com.pgmail.martsulg.bachelordegreeproject.fragments.TrainingsFragment;
 
 import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.UserInfo;
-import p.martsulg.domain.trainings.GetUserInfoUseCase;
+import p.martsulg.domain.user.GetUserInfoUseCase;
 
 public class NavigationActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {

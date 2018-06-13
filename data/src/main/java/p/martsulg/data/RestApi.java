@@ -4,6 +4,7 @@ package p.martsulg.data;
 import java.util.List;
 
 import io.reactivex.Observable;
+import p.martsulg.data.models.DeleteResponse;
 import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
@@ -40,12 +41,20 @@ public interface RestApi {
     @POST("data/timetable")
     Observable<TrainingsFeed> newTraining(@Body TrainingsFeed feed);
 
-    @POST("data/timetable/{objectId}")
-    Observable<Void> updateTraining(@Body TrainingsFeed feed);
-
     @POST("data/exercises")
     Observable<Void> newExercise(@Body ExercisesFeed feed);
 
+    @POST
+    Observable<TrainingsFeed> updateTraining(@Url String string, @Body TrainingsFeed feed);
+
+    @POST
+    Observable<ExercisesFeed> updateExercise(@Url String string, @Body ExercisesFeed feed);
+
+    @POST
+    Observable<UserInfo> updateUser(@Url String string, @Body UserInfo info);
+
+
+
     @DELETE
-    Observable<Long> delItem(@Url String url);
+    Observable<DeleteResponse> delItem(@Url String url);
 }

@@ -10,7 +10,7 @@ import com.pgmail.martsulg.bachelordegreeproject.fragments.ExerciseConstructFrag
 import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.UserInfo;
-import p.martsulg.domain.trainings.AddExerciseUseCase;
+import p.martsulg.domain.exercises.AddExerciseUseCase;
 
 
 /**

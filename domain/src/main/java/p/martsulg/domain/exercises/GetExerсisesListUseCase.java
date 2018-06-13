@@ -1,4 +1,4 @@
-package p.martsulg.domain.trainings;
+package p.martsulg.domain.exercises;
 
 import io.reactivex.Observable;
 import p.martsulg.data.RestService;
