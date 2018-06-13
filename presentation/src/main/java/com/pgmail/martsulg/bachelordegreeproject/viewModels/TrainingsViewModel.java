@@ -1,5 +1,6 @@
 package com.pgmail.martsulg.bachelordegreeproject.viewModels;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import com.pgmail.martsulg.bachelordegreeproject.R;
 import com.pgmail.martsulg.bachelordegreeproject.activities.NavigationActivity;
 import com.pgmail.martsulg.bachelordegreeproject.adapters.TrainingsAdapter;
+import com.pgmail.martsulg.bachelordegreeproject.extras.CustomDateUtils;
+import com.pgmail.martsulg.bachelordegreeproject.extras.WeekdaysEnum;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.ExercisesFragment;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.TrainingConstructFragment;
 
@@ -148,12 +151,29 @@ public class TrainingsViewModel implements MyViewModel {
                         delRequest(trainings.get(position).getObjectId(), position);
                         break;
                     case 2: //share
-                        //TODO
+                        shareAction(trainings.get(position));
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    private void shareAction(TrainingsFeed trainingsFeed){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/*");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, createShareText(trainingsFeed));
+        activity.startActivity(Intent.createChooser(shareIntent, "Share"));
+    }
+
+    private String createShareText(TrainingsFeed trainingsFeed){
+        return "Name: " + trainingsFeed.getTrainingName() +
+                "\n" +
+                "Day: " + WeekdaysEnum.convertIntToDay(trainingsFeed.getWeekday()) +
+                "\n" +
+                "Time: " + CustomDateUtils.millisToTime(trainingsFeed.getTime())+
+                "\n" +
+                "Complexity rating: " + trainingsFeed.getComplexity() + " stars";
     }
 
     public void goFurther(int position) {

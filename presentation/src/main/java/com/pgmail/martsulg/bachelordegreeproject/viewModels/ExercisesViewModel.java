@@ -1,5 +1,6 @@
 package com.pgmail.martsulg.bachelordegreeproject.viewModels;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -153,12 +154,25 @@ public class ExercisesViewModel implements MyViewModel {
                         delRequest(exercises.get(position).getObjectId(), position);
                         break;
                     case 2: //share
-                        //TODO
+                        shareAction(exercises.get(position));
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    private void shareAction(ExercisesFeed exercisesFeed){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/*");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, createShareText(exercisesFeed));
+        activity.startActivity(Intent.createChooser(shareIntent, "Share"));
+    }
+
+    private String createShareText(ExercisesFeed exercisesFeed){
+        return exercisesFeed.getExerciseName() +
+                "\n" +
+                "Sets: " + String.valueOf(exercisesFeed.getSetsNum());
     }
 
     public void goFurther(int position) {
