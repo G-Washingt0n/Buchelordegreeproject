@@ -42,8 +42,6 @@ public class ExercisesFragment extends MyFragment {
         return exercisesFragment;
     }
 
-    private LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +57,7 @@ public class ExercisesFragment extends MyFragment {
         FragmentExercisesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercises, container, false);
         binding.setViewModel(exercisesViewModel);
         binding.exercisesRecyclerView.setAdapter(exercisesViewModel.adapter);
-        binding.exercisesRecyclerView.setLayoutManager(layoutManager);
+        binding.exercisesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
     }
