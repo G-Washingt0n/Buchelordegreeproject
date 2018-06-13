@@ -84,7 +84,6 @@ public class RestService {
         StringBuilder url = new StringBuilder("data/Timetable/");
         url.append(request.getObjectId());
         url.append("?loadRelations=exercise");
-//        url.append("'&sortBy=queuePos%20asc");
         return restApi.getExercises(url.toString());
     }
 

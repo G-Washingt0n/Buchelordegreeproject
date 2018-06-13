@@ -46,7 +46,8 @@
                 android:hint="@string/name"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="@={viewModel.name}" />
+                android:text="@={viewModel.name}"
+                android:importantForAutofill="noExcludeDescendants" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -62,7 +63,8 @@
                 android:layout_height="match_parent"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:text="@={viewModel.email}" />
+                android:text="@={viewModel.email}"
+                android:importantForAutofill="noExcludeDescendants" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -78,7 +80,8 @@
                 android:layout_height="match_parent"
                 android:hint="@string/age"
                 android:inputType="number"
-                android:text="@={viewModel.age}" />
+                android:text="@={viewModel.age}"
+                android:importantForAutofill="noExcludeDescendants" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

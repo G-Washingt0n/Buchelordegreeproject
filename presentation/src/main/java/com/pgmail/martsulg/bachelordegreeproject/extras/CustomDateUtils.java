@@ -1,21 +1,18 @@
 package com.pgmail.martsulg.bachelordegreeproject.extras;
 
-import android.annotation.SuppressLint;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * Created by g_washingt0n on 20.05.2018.
  */
-@SuppressLint("DefaultLocale")
 public class CustomDateUtils {
 
     public static String millisToTime(long millis) {
         Calendar cal = new GregorianCalendar();
         cal.setTimeInMillis(millis);
 //        String str = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-        @SuppressLint("DefaultLocale") String str = String.format("%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
+        String str = String.format("%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
 
         return str;
     }

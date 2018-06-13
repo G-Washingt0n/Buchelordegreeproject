@@ -43,6 +43,7 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
     public ObservableField<Float> stars = new ObservableField<>();
     private String day;
     private Spinner spinner;
+    private String objectId;
     private TrainingConstructFragment trainingConstructFragment;
 
     public TrainingConstructViewModel(TrainingConstructFragment trainingConstructFragment, FragmentActivity activity, Bundle bundle) {
@@ -53,6 +54,8 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
 
     @Override
     public void onTimePicked(int h, int m) {
+        this.hours = h;
+        this.minutes = m;
         time.set(CustomDateUtils.timeToFormattedStr(h, m));
     }
 
@@ -64,6 +67,7 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
             spinnerSelection = bundle.getInt(NavigationActivity.WEEKDAY);
             time.set(CustomDateUtils.millisToTime(bundle.getLong(NavigationActivity.TIME)));
             stars.set(bundle.getFloat(NavigationActivity.COMPLEXITY));
+            objectId = bundle.getString(NavigationActivity.ID);
         }
 
         spinner = activity.findViewById(R.id.construct_spinner);
@@ -128,24 +132,24 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
             feed.setTrainingName(name.get());
             feed.setWeekday(WeekdaysEnum.convertDayToInt(day));
             feed.setOwnerId(new UserInfo().getInstance().getOwnerId());
+            feed.setObjectId(objectId);
             feed.setComplexity(stars.get());
             feed.setTime(CustomDateUtils.timeToMillis(hours, minutes));
 
             updateUseCase.execute(feed, new DisposableObserver<TrainingsFeed>() {
                 @Override
                 public void onNext(TrainingsFeed feed) {
-                    NavigationActivity.removeExtraFragment(activity.getSupportFragmentManager(), trainingConstructFragment);
+                    onCancelClick();
                 }
 
                 @Override
                 public void onError(Throwable e) {
-
+                    Toast.makeText(activity, R.string.error_updating_data, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onComplete() {
-                    addUseCase.dispose();
-//                    activity.onBackPressed();
+                    updateUseCase.dispose();
                 }
             });
         } else {
@@ -167,12 +171,11 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
             feed.setOwnerId(new UserInfo().getInstance().getOwnerId());
             feed.setComplexity(stars.get());
             feed.setTime(CustomDateUtils.timeToMillis(hours, minutes));
-            //взять дату из shared
-//        feed.setToken(EntryActivity.preferences.getString("Token", null));
+
             addUseCase.execute(feed, new DisposableObserver<TrainingsFeed>() {
                 @Override
                 public void onNext(TrainingsFeed feed) {
-                    NavigationActivity.removeExtraFragment(activity.getSupportFragmentManager(), trainingConstructFragment);
+                    onCancelClick();
                 }
 
                 @Override
@@ -183,7 +186,6 @@ public class TrainingConstructViewModel implements MyViewModel, TimePickerListen
                 @Override
                 public void onComplete() {
                     addUseCase.dispose();
-//                    activity.onBackPressed();
                 }
             });
         } else {

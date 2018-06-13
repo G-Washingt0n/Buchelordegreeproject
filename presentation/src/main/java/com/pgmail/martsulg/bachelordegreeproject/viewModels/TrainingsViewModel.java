@@ -107,7 +107,7 @@ public class TrainingsViewModel implements MyViewModel {
             @Override
             public void onError(Throwable e) {
                 Log.e("deleteError", e.getMessage());
-                Toast.makeText(activity, "Item removed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();     //не забыть обновить данные
                 adapter.notifyItemRemoved(position);
                 getRequest();
@@ -115,7 +115,6 @@ public class TrainingsViewModel implements MyViewModel {
 
             @Override
             public void onComplete() {
-                adapter.notifyDataSetChanged();     //не забыть обновить данные
                 delItemUseCase.dispose();
             }
         });
@@ -127,7 +126,7 @@ public class TrainingsViewModel implements MyViewModel {
     }
 
     public void onFabClick() {
-        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), new TrainingConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
+        NavigationActivity.showFragment(activity.getSupportFragmentManager(), new TrainingConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
     }
 
     public void menuAction(final ImageButton moreBtn, final int position) {
@@ -162,7 +161,7 @@ public class TrainingsViewModel implements MyViewModel {
     }
 
     private void openExtraFragment(Fragment fragment) {
-        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(), fragment);
+        NavigationActivity.showFragment(activity.getSupportFragmentManager(), fragment);
     }
 
 

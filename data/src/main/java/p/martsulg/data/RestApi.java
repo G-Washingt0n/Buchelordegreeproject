@@ -47,7 +47,7 @@ public interface RestApi {
     @POST("data/exercises")
     Observable<Void> newExercise(@Body ExercisesFeed feed);
 
-    @POST
+    @PUT
     Observable<TrainingsFeed> updateTraining(@Url String string, @Body TrainingsFeed feed);
 
     @POST

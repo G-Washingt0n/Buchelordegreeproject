@@ -170,6 +170,4 @@ public class ExercisesViewModel implements MyViewModel {
     private void openExtraFragment(Fragment fragment) {
         NavigationActivity.showFragment(activity.getSupportFragmentManager(), fragment);
     }
-
-
 }
