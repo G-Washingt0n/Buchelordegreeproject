@@ -59,7 +59,7 @@ public class LogInViewModel {
             @Override
             public void onError(@NonNull Throwable e) {
                 //TODO remove with error fields in TextInputFields
-                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show();
                 EntryActivity.removeProgress(activity.getSupportFragmentManager());
             }
 

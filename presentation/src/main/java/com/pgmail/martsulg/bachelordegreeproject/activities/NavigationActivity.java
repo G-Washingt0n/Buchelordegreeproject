@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.pgmail.martsulg.bachelordegreeproject.R;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.ProfileFragment;
+import com.pgmail.martsulg.bachelordegreeproject.fragments.ProgressBarFragment;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.TrainingsFragment;
 
 import io.reactivex.observers.DisposableObserver;
@@ -111,6 +112,20 @@ public class NavigationActivity extends AppCompatActivity
         preferences.edit()
                 .remove(key)
                 .apply();
+    }
+
+    public static void showProgress(FragmentManager fragmentManager) {
+        ProgressBarFragment progressBar = new ProgressBarFragment().getInstance();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.navigation_container, progressBar);
+        transaction.setPrimaryNavigationFragment(progressBar);
+        transaction.commit();
+    }
+
+    public static void removeProgress(FragmentManager fragmentManager) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.remove(new ProgressBarFragment().getInstance());
+        transaction.commit();
     }
 
 }

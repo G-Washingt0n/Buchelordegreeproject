@@ -10,10 +10,13 @@ import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
@@ -50,11 +53,14 @@ public interface RestApi {
     @POST
     Observable<ExercisesFeed> updateExercise(@Url String string, @Body ExercisesFeed feed);
 
-    @POST
+    @PUT
     Observable<UserInfo> updateUser(@Url String string, @Body UserInfo info);
-
-
 
     @DELETE
     Observable<DeleteResponse> delItem(@Url String url);
+
+
+    @GET("users/logout")
+    Observable<Response<Void>> logOut(@Header("user-token") String token);
+
 }

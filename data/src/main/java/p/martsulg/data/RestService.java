@@ -16,6 +16,7 @@ import p.martsulg.data.models.RegisterUser;
 import p.martsulg.data.models.RequestParams;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -123,6 +124,10 @@ public class RestService {
         StringBuilder url = new StringBuilder("users/");
         url.append(userInfo.getObjectId());
         return restApi.updateUser(url.toString(), userInfo);
+    }
+
+    public Observable<Response<Void>> logOut(String token) {
+        return restApi.logOut(token);
     }
 
 

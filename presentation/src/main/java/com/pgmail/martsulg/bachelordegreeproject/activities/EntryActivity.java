@@ -20,7 +20,7 @@ import p.martsulg.domain.entry.ValidTokenUseCase;
 public class EntryActivity extends FragmentActivity {
     public static SharedPreferences preferences;
 
-    private final String SHARED_PREF_NAME = "sharedEntry";
+    public static final String SHARED_PREF_NAME = "sharedEntry";
     public static final String TOKEN_NAME = "Token";
     public static final String USER_ID = "ID";
 
