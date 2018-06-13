@@ -34,6 +34,11 @@
     <string name="no">No</string>
     <string name="oops">…Oops</string>
     <string name="error_updating_data">Error updating data!</string>
+    <string name="index_number">Index number:</string>
+    <string name="repeats">Repeats:</string>
+    <string name="weight">Weight:</string>
+    <string name="required_time">Required time:</string>
+    <string name="rest_time">Rest time:</string>
 
 
     <string-array name="weekdays">

@@ -14,6 +14,7 @@ import com.pgmail.martsulg.bachelordegreeproject.R;
 import com.pgmail.martsulg.bachelordegreeproject.activities.NavigationActivity;
 import com.pgmail.martsulg.bachelordegreeproject.adapters.ExercisesAdapter;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.ExerciseConstructFragment;
+import com.pgmail.martsulg.bachelordegreeproject.fragments.SetsFragment;
 
 import java.util.List;
 
@@ -106,8 +107,8 @@ public class ExercisesViewModel implements MyViewModel {
             @Override
             public void onNext(DeleteResponse response) {
                 Toast.makeText(activity, "Item removed!", Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();     //не забыть обновить данные
-                adapter.notifyItemRemoved(position);
+                adapter.notifyDataSetChanged();     //убрать эту дичь потом
+                adapter.notifyItemRemoved(position);    //убрать эту дичь потом
                 getRequest();
             }
 
@@ -147,8 +148,6 @@ public class ExercisesViewModel implements MyViewModel {
                 switch (menuItem.getItemId()) {
                     case 0: //edit
                         openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
-//                        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
-//                                new TrainingConstructFragment().getInstance(exercises.get(position)));
                         break;
                     case 1: //delete
                         delRequest(exercises.get(position).getObjectId(), position);
@@ -176,9 +175,7 @@ public class ExercisesViewModel implements MyViewModel {
     }
 
     public void goFurther(int position) {
-//        openExtraFragment(no new  );
-//        Toast.makeText(activity, "Tap on exercises item #" + position,
-//                Toast.LENGTH_LONG).show();
+        openExtraFragment(SetsFragment.getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
     }
 
     private void openExtraFragment(Fragment fragment) {

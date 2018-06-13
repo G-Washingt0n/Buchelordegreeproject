@@ -30,9 +30,11 @@ public class NavigationActivity extends AppCompatActivity
     public static final String ID = "id";
     public static final String WEEKDAY = "weekday";
     public static final String TIME = "time";
+    public static final String REST_TIME = "restTime";
     public static final String COMPLEXITY = "complexity";
     public static final String NUMBER = "number";
     public static final String POSITION = "position";
+
 
     private GetUserInfoUseCase userInfoUseCase = new GetUserInfoUseCase();
 

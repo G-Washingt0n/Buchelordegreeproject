@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android.support.design="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.pgmail.martsulg.bachelordegreeproject.viewModels.SetConstructViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:clickable="true"
+        android:focusable="true">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/softBlue">
+
+            <TextView
+                android:id="@+id/set_order"
+                style="@style/textViewStyle"
+                android:text="@string/index_number"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android.support.design:layout_constraintStart_toStartOf="parent"
+                android.support.design:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/set_order_value"
+                style="@style/editTextStyle"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:inputType="number"
+                android:text="@={viewModel.order}"
+                android.support.design:layout_constraintTop_toTopOf="parent"
+                android.support.design:layout_constraintStart_toEndOf="@id/set_order"
+                android.support.design:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/set_reps"
+                style="@style/textViewStyle"
+                android:text="@string/repeats"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android.support.design:layout_constraintStart_toStartOf="parent"
+                android.support.design:layout_constraintTop_toBottomOf="@id/set_order" />
+
+            <EditText
+                android:id="@+id/set_reps_value"
+                style="@style/editTextStyle"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:inputType="number"
+                android:text="@={viewModel.repeats}"
+                android.support.design:layout_constraintTop_toBottomOf="@id/set_order_value"
+                android.support.design:layout_constraintStart_toEndOf="@id/set_reps"
+                android.support.design:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/set_weight"
+                style="@style/textViewStyle"
+                android:text="@string/weight"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android.support.design:layout_constraintStart_toStartOf="parent"
+                android.support.design:layout_constraintTop_toBottomOf="@id/set_reps" />
+
+            <EditText
+                android:id="@+id/set_weight_value"
+                style="@style/editTextStyle"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:inputType="number"
+                android:text="@={viewModel.weight}"
+                android.support.design:layout_constraintTop_toBottomOf="@id/set_reps_value"
+                android.support.design:layout_constraintStart_toEndOf="@id/set_weight"
+                android.support.design:layout_constraintEnd_toEndOf="parent" />
+
+
+            <TextView
+                android:id="@+id/set_reqTime"
+                style="@style/textViewStyle"
+                android:text="@string/required_time"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="36dp"
+                android.support.design:layout_constraintStart_toStartOf="parent"
+                android.support.design:layout_constraintTop_toBottomOf="@id/set_weight" />
+
+            <TextView
+                android:id="@+id/reqTime_picker"
+                style="@style/textViewStyle"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:hint="select"
+                android:onClick="@{() -> viewModel.onTimePickerClick1()}"
+                android:text="@={viewModel.reqTime}"
+                android.support.design:layout_constraintEnd_toEndOf="parent"
+                android.support.design:layout_constraintHorizontal_bias="0.109"
+                android.support.design:layout_constraintStart_toEndOf="@+id/set_reqTime"
+                android.support.design:layout_constraintTop_toBottomOf="@+id/set_weight_value" />
+
+            <TextView
+                android:id="@+id/set_restTime"
+                style="@style/textViewStyle"
+                android:text="@string/rest_time"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="36dp"
+                android.support.design:layout_constraintStart_toStartOf="parent"
+                android.support.design:layout_constraintTop_toBottomOf="@id/set_reqTime" />
+
+            <TextView
+                android:id="@+id/restTime_picker"
+                style="@style/textViewStyle"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:hint="select"
+                android:onClick="@{() -> viewModel.onTimePickerClick2()}"
+                android:text="@={viewModel.restTime}"
+                android.support.design:layout_constraintEnd_toEndOf="parent"
+                android.support.design:layout_constraintHorizontal_bias="0.109"
+                android.support.design:layout_constraintStart_toEndOf="@+id/set_restTime"
+                android.support.design:layout_constraintTop_toBottomOf="@+id/reqTime_picker" />
+
+
+            <TextView
+                android:id="@+id/set_applyBtn"
+                style="@style/textViewStyle"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"
+                android:text="Apply"
+                android:textColor="@color/brightBlue"
+                android:onClick="@{() -> viewModel.onApplyClick()}"
+                android.support.design:layout_constraintBottom_toBottomOf="parent"
+                android.support.design:layout_constraintEnd_toEndOf="parent"
+                android.support.design:layout_constraintTop_toBottomOf="@+id/restTime_picker"
+                android.support.design:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                style="@style/textViewStyle"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="Cancel"
+                android:textStyle="normal"
+                android:textColor="@color/red"
+                android:onClick="@{() -> viewModel.onCancelClick()}"
+                android.support.design:layout_constraintBottom_toBottomOf="parent"
+                android.support.design:layout_constraintEnd_toStartOf="@id/set_applyBtn"
+                android.support.design:layout_constraintHorizontal_bias="1.0"
+                android.support.design:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</layout>
