@@ -11,7 +11,7 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
+        android:background="@color/softBlue"
         android:orientation="vertical"
         android:textSize="20sp">
 

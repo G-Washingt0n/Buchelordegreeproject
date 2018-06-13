@@ -132,7 +132,7 @@ public class ExercisesViewModel implements MyViewModel {
     }
 
     public void onFabClick() {
-        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), null));
+        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), null, currentTrainingId));
     }
 
     public void menuAction(final ImageButton moreBtn, final int position) {
@@ -146,7 +146,7 @@ public class ExercisesViewModel implements MyViewModel {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case 0: //edit
-                        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
+                        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position), currentTrainingId));
 //                        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
 //                                new TrainingConstructFragment().getInstance(exercises.get(position)));
                         break;
