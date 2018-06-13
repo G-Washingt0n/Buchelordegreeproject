@@ -8,6 +8,7 @@ import p.martsulg.data.models.DeleteResponse;
 import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
+import p.martsulg.data.models.Relation;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import retrofit2.Response;
@@ -45,7 +46,7 @@ public interface RestApi {
     Observable<TrainingsFeed> newTraining(@Body TrainingsFeed feed);
 
     @POST("data/exercises")
-    Observable<Void> newExercise(@Body ExercisesFeed feed);
+    Observable<ExercisesFeed> newExercise(@Body ExercisesFeed feed);
 
     @PUT
     Observable<TrainingsFeed> updateTraining(@Url String string, @Body TrainingsFeed feed);
@@ -59,8 +60,10 @@ public interface RestApi {
     @DELETE
     Observable<DeleteResponse> delItem(@Url String url);
 
-
     @GET("users/logout")
     Observable<Response<Void>> logOut(@Header("user-token") String token);
+
+    @PUT("data/Timetable/{objectId}/exercise")
+    Observable<Integer> addRelation(@Path("objectId") String id, @Body Relation relation);
 
 }

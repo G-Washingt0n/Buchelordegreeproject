@@ -20,8 +20,9 @@ import p.martsulg.data.models.ExercisesFeed;
 public class ExerciseConstructFragment extends MyFragment {
 
     private Bundle bundle = null;
+    private String currentTrainingId;
 
-    public ExerciseConstructFragment getInstance(FragmentManager fragmentManager, ExercisesFeed feed) {
+    public ExerciseConstructFragment getInstance(FragmentManager fragmentManager, ExercisesFeed feed, String currentTrainingId) {
         Fragment fragment = fragmentManager
                 .findFragmentByTag(ExerciseConstructFragment.class.getName());
         ExerciseConstructFragment exerciseConstructFragment;
@@ -43,6 +44,7 @@ public class ExerciseConstructFragment extends MyFragment {
         } else {
             exerciseConstructFragment.setArguments(null);
         }
+        exerciseConstructFragment.currentTrainingId = currentTrainingId;
 
         return exerciseConstructFragment;
     }
@@ -64,7 +66,7 @@ public class ExerciseConstructFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        ExerciseConstructViewModel viewModel = new ExerciseConstructViewModel(this, getActivity(), bundle);
+        ExerciseConstructViewModel viewModel = new ExerciseConstructViewModel(this, getActivity(), bundle, currentTrainingId);
         this.viewModel = viewModel;
         FragmentConstructExerciseBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_construct_exercise, container, false);
         binding.setViewModel(viewModel);

@@ -112,7 +112,6 @@ public class ProfileViewModel {
 
                 @Override
                 public void onComplete() {
-                    NavigationActivity.removeProgress(activity.getSupportFragmentManager());
                     logOutUseCase.dispose();
                 }
             });

@@ -9,9 +9,9 @@ import p.martsulg.domain.UseCase;
  * Created by g_washingt0n on 28.04.2018.
  */
 
-public class AddExerciseUseCase extends UseCase<ExercisesFeed, Void> {
+public class AddExerciseUseCase extends UseCase<ExercisesFeed, ExercisesFeed> {
     @Override
-    protected Observable<Void> buildUseCase(ExercisesFeed feed) {
+    protected Observable<ExercisesFeed> buildUseCase(ExercisesFeed feed) {
         return RestService.getInstance().newExercise(feed);
     }
 }
