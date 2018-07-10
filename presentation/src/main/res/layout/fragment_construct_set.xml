@@ -40,7 +40,7 @@
                 android:id="@+id/set_order_value"
                 style="@style/editTextStyle"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="15dp"
                 android:inputType="number"
                 android:text="@={viewModel.order}"
                 android.support.design:layout_constraintTop_toTopOf="parent"
@@ -52,7 +52,7 @@
                 style="@style/textViewStyle"
                 android:text="@string/repeats"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="25dp"
                 android.support.design:layout_constraintStart_toStartOf="parent"
                 android.support.design:layout_constraintTop_toBottomOf="@id/set_order" />
 
@@ -60,7 +60,7 @@
                 android:id="@+id/set_reps_value"
                 style="@style/editTextStyle"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="6dp"
                 android:inputType="number"
                 android:text="@={viewModel.repeats}"
                 android.support.design:layout_constraintTop_toBottomOf="@id/set_order_value"
@@ -72,7 +72,7 @@
                 style="@style/textViewStyle"
                 android:text="@string/weight"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="25dp"
                 android.support.design:layout_constraintStart_toStartOf="parent"
                 android.support.design:layout_constraintTop_toBottomOf="@id/set_reps" />
 
@@ -80,7 +80,7 @@
                 android:id="@+id/set_weight_value"
                 style="@style/editTextStyle"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="6dp"
                 android:inputType="number"
                 android:text="@={viewModel.weight}"
                 android.support.design:layout_constraintTop_toBottomOf="@id/set_reps_value"

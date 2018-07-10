@@ -15,6 +15,7 @@ import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
 import p.martsulg.data.models.RequestParams;
 import p.martsulg.data.models.RequestRelation;
+import p.martsulg.data.models.SetsFeed;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import retrofit2.Response;
@@ -134,4 +135,17 @@ public class RestService {
         return restApi.addRelation(mRelation.getObjectId(), mRelation.getmRelation());
     }
 
+    public Observable<Integer> addSetRelation (RequestRelation mRelation) {
+        return restApi.addSetRelation(mRelation.getObjectId(), mRelation.getmRelation());
+    }
+    public Observable<SetsFeed> newSet(SetsFeed feed) {
+        return restApi.newSet(feed);
+    }
+
+    public Observable<ExercisesFeed> getSets(RequestParams request) {
+            StringBuilder url = new StringBuilder("data/exercises/");
+            url.append(request.getObjectId());
+            url.append("?loadRelations=sets");
+            return restApi.getSets(url.toString());
+    }
 }

@@ -13,9 +13,10 @@ import android.widget.Toast;
 import com.pgmail.martsulg.bachelordegreeproject.R;
 import com.pgmail.martsulg.bachelordegreeproject.activities.NavigationActivity;
 import com.pgmail.martsulg.bachelordegreeproject.adapters.ExercisesAdapter;
+import com.pgmail.martsulg.bachelordegreeproject.adapters.SetsAdapter;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.ExerciseConstructFragment;
+import com.pgmail.martsulg.bachelordegreeproject.fragments.SetConstructFragment;
 import com.pgmail.martsulg.bachelordegreeproject.fragments.SetsFragment;
-import com.pgmail.martsulg.bachelordegreeproject.fragments.TimerFragment;
 
 import java.util.List;
 
@@ -23,30 +24,29 @@ import io.reactivex.observers.DisposableObserver;
 import p.martsulg.data.models.DeleteResponse;
 import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.RequestParams;
+import p.martsulg.data.models.SetsFeed;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import p.martsulg.domain.DelItemUseCase;
-import p.martsulg.domain.exercises.AddExerciseUseCase;
-import p.martsulg.domain.exercises.GetExerсisesListUseCase;
+import p.martsulg.domain.sets.GetSetsListUseCase;
 
 /**
  * Created by g_washingt0n on 07.02.2018.
  */
 
-public class ExercisesViewModel implements MyViewModel {
-    public ExercisesAdapter adapter;
+public class SetsViewModel implements MyViewModel {
+    public SetsAdapter adapter;
     private FragmentActivity activity;
-    private GetExerсisesListUseCase listUseCase = new GetExerсisesListUseCase();
+    private GetSetsListUseCase listUseCase = new GetSetsListUseCase();
     private DelItemUseCase delItemUseCase = new DelItemUseCase();
-    private List<ExercisesFeed> exercises;
-    //    private ArrayList<ListTrainings> adapterList;
+    private List<SetsFeed> sets;
     private UserInfo user = new UserInfo().getInstance();
-    private String currentTrainingId;
+    private String currentExerciseId;
 
-    public ExercisesViewModel(FragmentActivity activity, String trainingId) {
+    public SetsViewModel(FragmentActivity activity, String exerciseId) {
         this.activity = activity;
-        adapter = new ExercisesAdapter(activity, this, null);
-        currentTrainingId = trainingId;
+        adapter = new SetsAdapter(activity, this, null);
+        currentExerciseId = exerciseId;
     }
 
     @Override
@@ -73,15 +73,15 @@ public class ExercisesViewModel implements MyViewModel {
     @Override
     public void getRequest() {
         RequestParams params = new RequestParams();
-        params.setObjectId(currentTrainingId);
+        params.setObjectId(currentExerciseId);
 
-        listUseCase.execute(params, new DisposableObserver<TrainingsFeed>() {
+        listUseCase.execute(params, new DisposableObserver<ExercisesFeed>() {
             @Override
-            public void onNext(TrainingsFeed feed) {
-                exercises = feed.getExercises();
-                adapter.dataChanged(feed.getExercises());
+            public void onNext(ExercisesFeed feed) {
+                sets = feed.getSets();
+                adapter.dataChanged(feed.getSets());
                 adapter.notifyDataSetChanged();
-                Log.e("adapter notify", String.valueOf(feed.getExercises().size()));
+                Log.e("adapter notify", String.valueOf(feed.getSets().size()));
             }
 
             @Override
@@ -100,9 +100,8 @@ public class ExercisesViewModel implements MyViewModel {
     public void delRequest(String objectId, int position) {
         RequestParams params = new RequestParams();
         params.setObjectId(objectId);
-        params.setTimetable(activity.getString(R.string.table_exercises));
+        params.setTimetable(activity.getString(R.string.table_sets));
         delItemUseCase.execute(params, new DisposableObserver<DeleteResponse>() {
-
 
             @Override
             public void onNext(DeleteResponse response) {
@@ -128,13 +127,8 @@ public class ExercisesViewModel implements MyViewModel {
     public void addRequest() {
     }
 
-    public void onPlayClick(int position) {
-        //TODO add timer screen
-        openExtraFragment(new TimerFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
-    }
-
     public void onFabClick() {
-        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), null, currentTrainingId));
+        openExtraFragment(new SetConstructFragment().getInstance(activity.getSupportFragmentManager(), null, currentExerciseId));
     }
 
     public void menuAction(final ImageButton moreBtn, final int position) {
@@ -143,44 +137,35 @@ public class ExercisesViewModel implements MyViewModel {
         popup.getMenu().add(Menu.NONE, 1, Menu.NONE, activity.getResources().getString(R.string.delete));
         popup.getMenu().add(Menu.NONE, 2, Menu.NONE, activity.getResources().getString(R.string.share));
         popup.show();
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case 0: //edit
-//                        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
-                        openExtraFragment(new ExerciseConstructFragment().getInstance(activity.getSupportFragmentManager(), exercises.get(position), currentTrainingId));
-//                        NavigationActivity.putExtraFragment(activity.getSupportFragmentManager(),
-//                                new TrainingConstructFragment().getInstance(exercises.get(position)));
-                        break;
-                    case 1: //delete
-                        delRequest(exercises.get(position).getObjectId(), position);
-                        break;
-                    case 2: //share
-                        shareAction(exercises.get(position));
-                        break;
-                }
-                return true;
+        popup.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case 0: //edit
+//                        openExtraFragment(new SetConstructFragment().getInstance(activity.getSupportFragmentManager(), sets.get(position), currentExerciseId));
+                    break;
+                case 1: //delete
+                    delRequest(sets.get(position).getObjectId(), position);
+                    break;
+                case 2: //share
+//                        shareAction(sets.get(position));
+                    break;
             }
+            return true;
         });
     }
 
-    private void shareAction(ExercisesFeed exercisesFeed){
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/*");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, createShareText(exercisesFeed));
-        activity.startActivity(Intent.createChooser(shareIntent, "Share"));
-    }
+//    private void shareAction(SetsFeed setsFeed){
+//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//        shareIntent.setType("text/*");
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, createShareText(setsFeed));
+//        activity.startActivity(Intent.createChooser(shareIntent, "Share"));
+//    }
+//
+//    private String createShareText(SetsFeed setsFeed){
+//        return setsFeed.getExerciseName() +
+//                "\n" +
+//                "Sets: " + String.valueOf(setsFeed.getSetsNum());
+//    }
 
-    private String createShareText(ExercisesFeed exercisesFeed){
-        return exercisesFeed.getExerciseName() +
-                "\n" +
-                "Sets: " + String.valueOf(exercisesFeed.getSetsNum());
-    }
-
-    public void goFurther(int position) {
-        openExtraFragment(SetsFragment.getInstance(activity.getSupportFragmentManager(), exercises.get(position)));
-    }
 
     private void openExtraFragment(Fragment fragment) {
         NavigationActivity.showFragment(activity.getSupportFragmentManager(), fragment);

@@ -9,6 +9,7 @@ import p.martsulg.data.models.ExercisesFeed;
 import p.martsulg.data.models.LogInUser;
 import p.martsulg.data.models.RegisterUser;
 import p.martsulg.data.models.Relation;
+import p.martsulg.data.models.SetsFeed;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
 import retrofit2.Response;
@@ -39,6 +40,9 @@ public interface RestApi {
     @GET
     Observable<TrainingsFeed> getExercises(@Url String string);
 
+    @GET
+    Observable<ExercisesFeed> getSets(@Url String url);
+
     @GET("users/{userId}?props")
     Observable<UserInfo> getUserInfo(@Path("userId") String id);
 
@@ -65,5 +69,12 @@ public interface RestApi {
 
     @PUT("data/Timetable/{objectId}/exercise")
     Observable<Integer> addRelation(@Path("objectId") String id, @Body Relation relation);
+
+
+    @PUT("data/Exercises/{objectId}/sets")
+    Observable<Integer> addSetRelation(@Path("objectId") String id, @Body Relation relation);
+
+    @POST("data/sets")
+    Observable<SetsFeed> newSet(@Body SetsFeed feed);
 
 }

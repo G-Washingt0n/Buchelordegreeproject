@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.pgmail.martsulg.bachelordegreeproject.R;
 import com.pgmail.martsulg.bachelordegreeproject.activities.NavigationActivity;
 import com.pgmail.martsulg.bachelordegreeproject.databinding.FragmentExercisesBinding;
+import com.pgmail.martsulg.bachelordegreeproject.databinding.FragmentSetsBinding;
 import com.pgmail.martsulg.bachelordegreeproject.viewModels.ExercisesViewModel;
+import com.pgmail.martsulg.bachelordegreeproject.viewModels.SetsViewModel;
 
 import p.martsulg.data.models.ExercisesFeed;
 
@@ -23,41 +25,41 @@ import p.martsulg.data.models.ExercisesFeed;
 
 public class SetsFragment extends MyFragment {
 
-    private String trainingId;
+    private String exerciseId;
 
     public static SetsFragment getInstance(FragmentManager fragmentManager, ExercisesFeed feed) {
         Fragment fragment = fragmentManager
                 .findFragmentByTag(SetsFragment.class.getName());
-        SetsFragment exercisesFragment;
+        SetsFragment setsFragment;
         if (fragment != null && fragment instanceof SetsFragment) {
-            exercisesFragment = (SetsFragment) fragment;
+            setsFragment = (SetsFragment) fragment;
         } else {
-            exercisesFragment = new SetsFragment();
+            setsFragment = new SetsFragment();
 
         }
         Bundle bundle = new Bundle();
         bundle.putString(NavigationActivity.ID, feed.getObjectId());
-        exercisesFragment.setArguments(bundle);
+        setsFragment.setArguments(bundle);
 
-        return exercisesFragment;
+        return setsFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
-        trainingId = bundle.getString(NavigationActivity.ID);
+        exerciseId = bundle.getString(NavigationActivity.ID);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ExercisesViewModel exercisesViewModel = new ExercisesViewModel(getActivity(), trainingId);
-        this.viewModel = exercisesViewModel;
-        FragmentExercisesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercises, container, false);
-        binding.setViewModel(exercisesViewModel);
-        binding.exercisesRecyclerView.setAdapter(exercisesViewModel.adapter);
-        binding.exercisesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        SetsViewModel setsViewModel = new SetsViewModel(getActivity(), exerciseId);
+        this.viewModel = setsViewModel;
+        FragmentSetsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sets, container, false);
+        binding.setViewModel(setsViewModel);
+        binding.setsRecyclerView.setAdapter(setsViewModel.adapter);
+        binding.setsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
     }

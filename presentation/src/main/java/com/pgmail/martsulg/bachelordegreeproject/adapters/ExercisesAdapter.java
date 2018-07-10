@@ -57,7 +57,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.Hold
         holder.exerciseName.setText(exercises.get(position).getExerciseName());
         holder.exerciseSets.setText(activity.getString(R.string.sets, exercises.get(position).getSetsNum()));
         holder.moreBtn.setOnClickListener(v -> viewModel.menuAction(holder.moreBtn, position));
-        holder.exerciseStart.setOnClickListener(v -> viewModel.onPlayClick());
+        holder.exerciseStart.setOnClickListener(v -> viewModel.onPlayClick(position));
         holder.itemView.setOnClickListener(v -> viewModel.goFurther(position));
     }
 

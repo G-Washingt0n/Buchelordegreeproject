@@ -8,13 +8,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class SetsFeed {
     @SerializedName("restTime")
-    private int restTime;
+    private long restTime;
     @SerializedName("repWeight")
     private int repWeight;
     @SerializedName("created")
     private long created;
     @SerializedName("reqTime")
-    private int reqTime;
+    private long reqTime;
     @SerializedName("ownerId")
     private String ownerId;
     @SerializedName("updated")
@@ -26,13 +26,20 @@ public class SetsFeed {
     @SerializedName("repsNum")
     private int repsNum;
 
-
-    public int getRestTime() {
+    public long getRestTime() {
         return restTime;
     }
 
-    public void setRestTime(int restTime) {
+    public void setRestTime(long restTime) {
         this.restTime = restTime;
+    }
+
+    public long getReqTime() {
+        return reqTime;
+    }
+
+    public void setReqTime(long reqTime) {
+        this.reqTime = reqTime;
     }
 
     public int getRepWeight() {
@@ -51,13 +58,6 @@ public class SetsFeed {
         this.created = created;
     }
 
-    public int getReqTime() {
-        return reqTime;
-    }
-
-    public void setReqTime(int reqTime) {
-        this.reqTime = reqTime;
-    }
 
     public String getOwnerId() {
         return ownerId;

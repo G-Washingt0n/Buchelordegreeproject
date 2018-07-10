@@ -14,7 +14,7 @@ public class RegisterUser {
     @SerializedName("surname")
     private String surname;
     @SerializedName("age")
-    private int age;
+    private int age;}
 
     public int getAge() {
         return age;

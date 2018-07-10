@@ -3,11 +3,14 @@ package p.martsulg.data.models;
 import com.google.gson.annotations.SerializedName;
 
 public class UserInfo {
-    private static UserInfo instance = new UserInfo();
+    private static volatile UserInfo instance = new UserInfo();
 
     public UserInfo getInstance() {
         if (instance == null) {
-            instance = new UserInfo();
+            synchronized (UserInfo.class){
+                if(instance==null)
+                    instance = new UserInfo();
+            }
         }
         return instance;
     }
@@ -23,10 +26,7 @@ public class UserInfo {
     private String objectId;
     @SerializedName("user-token")
     private String token;
-//    @SerializedName("avatar")
-//    private String avatarUrl;
-//    @SerializedName("is_admin")
-//    private int admin;
+
 
 
     public String getSurname() {
