@@ -18,7 +18,6 @@ import p.martsulg.data.models.UserInfo;
 import p.martsulg.domain.entry.LogOutUseCase;
 import p.martsulg.domain.entry.ValidTokenUseCase;
 import p.martsulg.domain.user.UpdateUserInfoUseCase;
-import retrofit2.Response;
 
 import static com.pgmail.martsulg.bachelordegreeproject.activities.EntryActivity.SHARED_PREF_NAME;
 import static com.pgmail.martsulg.bachelordegreeproject.activities.EntryActivity.TOKEN_NAME;
@@ -97,9 +96,9 @@ public class ProfileViewModel {
         preferences = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         if(preferences != null) {
             String token = preferences.getString(TOKEN_NAME, null);
-            logOutUseCase.execute(token, new DisposableObserver<Response<Void>>() {
+            logOutUseCase.execute(token, new DisposableObserver<Void>() {
                 @Override
-                public void onNext(@io.reactivex.annotations.NonNull Response<Void> response) {
+                public void onNext(@io.reactivex.annotations.NonNull Void response) {
                     validate(token);
                 }
 

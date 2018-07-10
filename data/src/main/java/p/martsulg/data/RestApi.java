@@ -12,7 +12,6 @@ import p.martsulg.data.models.Relation;
 import p.martsulg.data.models.SetsFeed;
 import p.martsulg.data.models.TrainingsFeed;
 import p.martsulg.data.models.UserInfo;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -65,7 +64,7 @@ public interface RestApi {
     Observable<DeleteResponse> delItem(@Url String url);
 
     @GET("users/logout")
-    Observable<Response<Void>> logOut(@Header("user-token") String token);
+    Observable<Void> logOut(@Header("user-token") String token);
 
     @PUT("data/Timetable/{objectId}/exercise")
     Observable<Integer> addRelation(@Path("objectId") String id, @Body Relation relation);

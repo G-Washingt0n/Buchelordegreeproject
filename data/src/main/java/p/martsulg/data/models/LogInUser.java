@@ -8,7 +8,7 @@ public class LogInUser {
     @SerializedName("login")
     private String email;
     @SerializedName("password")
-    private String password;}
+    private String password;
 
     public String getEmail() {
         return email;
